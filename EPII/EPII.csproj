@@ -38,6 +38,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Cache.cs" />
+    <Compile Include="Core\Loop.cs" />
     <Compile Include="Core\Runtime.cs" />
     <Compile Include="Extend\MathEx.cs" />
     <Compile Include="Extend\ObjectEx.cs" />

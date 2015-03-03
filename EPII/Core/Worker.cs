@@ -1,45 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 
 namespace EPII
 {
     public class Worker
     {
+        private object _SyncRoot = new object();
         private Queue<Action> _Jobs
             = new Queue<Action>();
-        private Thread _Thread = null;
-        private bool _IsBusy = false;
-        private object _SyncRoot = new object();
+        private Loop _Loop = null;
 
         public Worker()
         {
+            _Loop = new Loop(new Action(Routine));
         }
 
-        private void WorkLoop()
+        private void Routine()
         {
-            while (true)
+            Action job = null;
+            lock (_SyncRoot)
             {
-                if (!_IsBusy)
-                    break;
-                Action job = null;
-                lock (_SyncRoot)
-                {
-                    if (_Jobs.Count != 0)
-                        job = _Jobs.Dequeue();
-                }
-                if (job == null)
-                {
-                    Thread.Sleep(50);
-                    continue;
-                }
-                try
-                {
-                    job.Invoke();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
+                if (_Jobs.Count != 0)
+                    job = _Jobs.Dequeue();
+            }
+            if (job == null)
+                Thread.Sleep(50);
+            else 
+            {
+                try {
+                    job();
+                } catch (Exception ex) {
+                    Trace.TraceError(ex.Message);
                 }
             }
         }
@@ -48,8 +41,7 @@ namespace EPII
         {
             if (job != null)
             {
-                lock (_SyncRoot)
-                {
+                lock (_SyncRoot) {
                     _Jobs.Enqueue(job);
                 }
             }
@@ -57,24 +49,12 @@ namespace EPII
 
         public void Start()
         {
-            if (_Thread == null)
-                _Thread = new Thread(
-                    new ThreadStart(WorkLoop));
-            _IsBusy = true;
-            _Thread.Start();
+            _Loop.Start();
         }
 
         public void Stop(int timeout = 10000)
         {
-            if (_Thread == null)
-                return;
-            lock (_SyncRoot)
-            {
-                _IsBusy = false;
-            }
-            _Thread.Join(timeout);
-            if (_Thread.ThreadState != ThreadState.Stopped)
-                _Thread.Abort();
+            _Loop.Stop(timeout);
         }
     }
 }

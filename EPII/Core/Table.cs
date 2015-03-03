@@ -7,9 +7,9 @@ namespace EPII
     /// </summary>
     public class Table<T>
     {
+        protected object _SyncRoot = new object();
         protected Dictionary<string, T> _Data
             = new Dictionary<string, T>();
-        protected object _SyncRoot = new object();
 
         public IEnumerable<string> Keys 
         {
