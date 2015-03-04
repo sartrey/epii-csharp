@@ -20,15 +20,13 @@ namespace EPII
         private void Routine()
         {
             Action job = null;
-            lock (_SyncRoot)
-            {
+            lock (_SyncRoot) {
                 if (_Jobs.Count != 0)
                     job = _Jobs.Dequeue();
             }
             if (job == null)
                 Thread.Sleep(50);
-            else 
-            {
+            else {
                 try {
                     job();
                 } catch (Exception ex) {
@@ -39,8 +37,7 @@ namespace EPII
 
         public void Push(Action job)
         {
-            if (job != null)
-            {
+            if (job != null) {
                 lock (_SyncRoot) {
                     _Jobs.Enqueue(job);
                 }

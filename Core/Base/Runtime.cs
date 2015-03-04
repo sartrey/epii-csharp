@@ -7,9 +7,9 @@
         /// <summary>
         /// get runtime single instance
         /// </summary>
-        public static Runtime Instance 
+        public static Runtime Instance
         {
-            get 
+            get
             {
                 if (_Instance == null)
                     _Instance = new Runtime();
@@ -17,24 +17,23 @@
             }
         }
 
-        protected Table<object> _Data 
+        protected Table<object> _Data
             = new Table<object>();
 
-        public Table<object> Data 
+        public Table<object> Data
         {
             get { return _Data; }
         }
 
-        public Runtime() 
+        public Runtime()
         {
         }
 
         protected override void DisposeManaged()
         {
-            foreach (var key in _Data.Keys) 
-            {
+            foreach (var key in _Data.Keys) {
                 var item = _Data[key] as ObjectEx;
-                if(item != null)
+                if (item != null)
                     item.Dispose();
             }
             _Data.Clear();

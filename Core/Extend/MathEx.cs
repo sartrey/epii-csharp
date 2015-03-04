@@ -8,8 +8,7 @@
         public static long Power(int x, int n)
         {
             long value = 1;
-            while (n > 0)
-            {
+            while (n > 0) {
                 value = value * x;
                 n--;
             }

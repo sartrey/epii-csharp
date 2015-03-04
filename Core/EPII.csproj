@@ -38,14 +38,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\Cache.cs" />
-    <Compile Include="Core\Loop.cs" />
-    <Compile Include="Core\Runtime.cs" />
+    <Compile Include="Base\Cache.cs" />
+    <Compile Include="Base\Loop.cs" />
+    <Compile Include="Base\Macro.cs" />
+    <Compile Include="Base\Runtime.cs" />
+    <Compile Include="Base\Table.cs" />
+    <Compile Include="Base\Worker.cs" />
+    <Compile Include="Code\AES.cs" />
+    <Compile Include="Code\Bytes.cs" />
+    <Compile Include="Code\Hash.cs" />
+    <Compile Include="Code\RCC.cs" />
+    <Compile Include="Code\LUC.cs" />
+    <Compile Include="Code\STC.cs" />
     <Compile Include="Extend\MathEx.cs" />
     <Compile Include="Extend\ObjectEx.cs" />
-    <Compile Include="Core\Table.cs" />
     <Compile Include="Extend\TypeEx.cs" />
-    <Compile Include="Core\Worker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

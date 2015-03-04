@@ -15,15 +15,15 @@ namespace EPII
 
         public event Action<object> ChangeCommitted
         {
-            add 
+            add
             {
-                if(value != null)
-                    _ChangeCommitted += value; 
+                if (value != null)
+                    _ChangeCommitted += value;
             }
-            remove 
+            remove
             {
-                if(value != null)
-                    _ChangeCommitted -= value; 
+                if (value != null)
+                    _ChangeCommitted -= value;
             }
         }
 
@@ -32,8 +32,7 @@ namespace EPII
             get { return _Data; }
             set
             {
-                lock (_SyncRoot)
-                {
+                lock (_SyncRoot) {
                     if (_Data == value)
                         return;
                     _Data = value;
@@ -42,10 +41,10 @@ namespace EPII
             }
         }
 
-        public int MaxTicks 
+        public int MaxTicks
         {
             get { return _MaxTicks; }
-            set 
+            set
             {
                 lock (_SyncRoot) {
                     _MaxTicks = value;
@@ -64,8 +63,7 @@ namespace EPII
 
         public bool BeginEdit()
         {
-            lock (_SyncRoot)
-            {
+            lock (_SyncRoot) {
                 if (_IsBusy)
                     return false;
                 _IsBusy = true;
@@ -77,14 +75,10 @@ namespace EPII
         {
             if (!_IsBusy)
                 return;
-            if (changed) 
-            {
-                lock (_SyncRoot) 
-                {
-                    if (++_Ticks == _MaxTicks) 
-                    {
-                        if (_ChangeCommitted != null) 
-                        {
+            if (changed) {
+                lock (_SyncRoot) {
+                    if (++_Ticks == _MaxTicks) {
+                        if (_ChangeCommitted != null) {
                             try {
                                 _ChangeCommitted(_Data);
                             } catch (Exception ex) {
@@ -100,10 +94,8 @@ namespace EPII
 
         public void Commit()
         {
-            lock (_SyncRoot) 
-            {
-                if (_ChangeCommitted != null) 
-                {
+            lock (_SyncRoot) {
+                if (_ChangeCommitted != null) {
                     try {
                         _ChangeCommitted.Invoke(_Data);
                     } catch (Exception ex) {
@@ -117,13 +109,12 @@ namespace EPII
 
         public void Clear()
         {
-            lock (_SyncRoot)
-            {
+            lock (_SyncRoot) {
                 _Data = null;
                 _Ticks = 0;
             }
         }
-        
+
         protected override void DisposeManaged()
         {
             lock (_SyncRoot) {

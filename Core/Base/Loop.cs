@@ -22,23 +22,22 @@ namespace EPII
                 }
             }
         }
-        
+
         public int Times
         {
             get { return _Times; }
         }
 
-        public Loop(Action action) 
+        public Loop(Action action)
         {
             if (action == null)
                 throw new ArgumentNullException();
             _Action = action;
         }
 
-        private void Routine() 
+        private void Routine()
         {
-            while (true)
-            {
+            while (true) {
                 if (!_IsRunning)
                     break;
                 _Action();

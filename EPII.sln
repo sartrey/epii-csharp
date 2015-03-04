@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPII", "EPII\EPII.csproj", "{97D038BD-9CE3-443D-B93D-492D2BD0381D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPII", "Core\EPII.csproj", "{97D038BD-9CE3-443D-B93D-492D2BD0381D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPII.Test", "Test\EPII.Test.csproj", "{B3DFD45F-31DB-4B5D-9CE5-ACB8AD5352BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{97D038BD-9CE3-443D-B93D-492D2BD0381D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97D038BD-9CE3-443D-B93D-492D2BD0381D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97D038BD-9CE3-443D-B93D-492D2BD0381D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3DFD45F-31DB-4B5D-9CE5-ACB8AD5352BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3DFD45F-31DB-4B5D-9CE5-ACB8AD5352BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3DFD45F-31DB-4B5D-9CE5-ACB8AD5352BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3DFD45F-31DB-4B5D-9CE5-ACB8AD5352BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -11,25 +11,23 @@ namespace EPII
         protected Dictionary<string, T> _Data
             = new Dictionary<string, T>();
 
-        public IEnumerable<string> Keys 
+        public IEnumerable<string> Keys
         {
             get
             {
-                lock (_SyncRoot)
-                {
+                lock (_SyncRoot) {
                     foreach (var kvp in _Data)
                         yield return kvp.Key;
                 }
             }
         }
-        
+
         public T this[string key]
         {
             get
             {
                 T result = default(T);
-                lock (_SyncRoot)
-                {
+                lock (_SyncRoot) {
                     if (_Data.ContainsKey(key))
                         result = _Data[key];
                 }
@@ -37,8 +35,7 @@ namespace EPII
             }
             set
             {
-                lock (_SyncRoot)
-                {
+                lock (_SyncRoot) {
                     if (_Data.ContainsKey(key))
                         _Data[key] = value;
                     else
@@ -54,17 +51,15 @@ namespace EPII
         public bool Contains(string key)
         {
             bool result = false;
-            lock (_SyncRoot)
-            {
+            lock (_SyncRoot) {
                 result = _Data.ContainsKey(key);
             }
             return result;
         }
 
-        public void Add(string key, T value) 
+        public void Add(string key, T value)
         {
-            lock (_SyncRoot)
-            {
+            lock (_SyncRoot) {
                 if (!_Data.ContainsKey(key))
                     _Data.Add(key, value);
             }
@@ -72,8 +67,7 @@ namespace EPII
 
         public void Remove(string key)
         {
-            lock (_SyncRoot)
-            {
+            lock (_SyncRoot) {
                 if (_Data.ContainsKey(key))
                     _Data.Remove(key);
             }
@@ -81,8 +75,7 @@ namespace EPII
 
         public void Clear()
         {
-            lock (_SyncRoot)
-            {
+            lock (_SyncRoot) {
                 _Data.Clear();
             }
         }

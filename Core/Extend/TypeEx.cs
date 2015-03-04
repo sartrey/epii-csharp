@@ -11,7 +11,7 @@ namespace EPII
         /// <summary>
         /// get root type
         /// </summary>
-        public Type Root 
+        public Type Root
         {
             get { return _Root; }
         }
@@ -19,7 +19,7 @@ namespace EPII
         /// <summary>
         /// get path for assembly with type
         /// </summary>
-        public string Path 
+        public string Path
         {
             get { return _Root.Assembly.Location; }
         }
@@ -55,8 +55,7 @@ namespace EPII
         public IEnumerable<Type> GetDerivedTypes(Assembly assembly)
         {
             var types = assembly.GetTypes();
-            foreach (var type in types)
-            {
+            foreach (var type in types) {
                 var typex = new TypeEx(type);
                 if (typex.HasInterface(_Root))
                     yield return type;
