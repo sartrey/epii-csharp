@@ -3,7 +3,7 @@ using System.Text;
 
 namespace EPII
 {
-    public class Bytes
+    public class Bytes : ArrayEx<byte>
     {
         public static Bytes FromBase64(string source)
         {
@@ -20,42 +20,14 @@ namespace EPII
             return new Bytes(data);
         }
 
-        private byte[] _Data
-            = null;
-
-        public byte[] Data
-        {
-            get { return _Data; }
-        }
-
         public Bytes(int size)
+            : base(size)
         {
-            _Data = new byte[size];
         }
 
         public Bytes(byte[] data)
+            : base(data)
         {
-            _Data = data;
-        }
-
-        public void Resize(int size, bool left = false)
-        {
-            var bytes = new byte[size];
-            var old_size = _Data.Length;
-            if (size < old_size)
-                Array.Copy(_Data, left ? old_size - size : 0, bytes, 0, size);
-            else
-                Array.Copy(_Data, 0, bytes, left ? size - old_size : 0, old_size);
-        }
-
-        public void Fill(byte[] bytes)
-        {
-            var round = _Data.Length / bytes.Length;
-            var rest = _Data.Length % bytes.Length;
-            for (int i = 0; i < round; i++)
-                bytes.CopyTo(_Data, i * bytes.Length);
-            for (int i = 0; i < rest; i++)
-                _Data[i + round * bytes.Length] = bytes[i];
         }
 
         public void Write(int value, int start = 0)

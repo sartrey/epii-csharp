@@ -39,10 +39,6 @@ namespace EPII.Test
             }
             Console.WriteLine("repeat:" + (strs1.Count - strs2.Count));
             */
-
-            var ints1 = new int[6] { 1, 2, 3, 4, 5, 6 };
-            var ints2 = new int[3] { 0, 0, 0 };
-            Array.Copy(ints1, 0, ints2, 0, 3);
         }
     }
 }
