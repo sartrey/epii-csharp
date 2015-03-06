@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EPII
+namespace EPII.Code
 {
     /// <summary>
     /// short time code

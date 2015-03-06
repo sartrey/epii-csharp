@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace EPII
+namespace EPII.Code
 {
     /// <summary>
     /// hash

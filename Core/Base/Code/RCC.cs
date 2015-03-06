@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace EPII
+namespace EPII.Code
 {
     /// <summary>
     /// radix conversion code

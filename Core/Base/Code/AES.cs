@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Security.Cryptography;
 
-namespace EPII
+namespace EPII.Code
 {
     public sealed class AES : ObjectEx
     {

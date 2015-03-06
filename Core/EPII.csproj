@@ -41,24 +41,24 @@
     <Compile Include="Base\Cache.cs" />
     <Compile Include="Base\Loop.cs" />
     <Compile Include="Base\Macro.cs" />
-    <Compile Include="Base\Runtime.cs" />
+    <Compile Include="Model\Domain\DataContext.cs" />
+    <Compile Include="Model\Runtime.cs" />
     <Compile Include="Base\Table.cs" />
     <Compile Include="Base\Worker.cs" />
-    <Compile Include="Code\AES.cs" />
-    <Compile Include="Code\Bytes.cs" />
-    <Compile Include="Code\Hash.cs" />
-    <Compile Include="Code\RCC.cs" />
-    <Compile Include="Code\LUC.cs" />
-    <Compile Include="Code\STC.cs" />
-    <Compile Include="Extend\ArrayEx.cs" />
-    <Compile Include="Extend\MathEx.cs" />
-    <Compile Include="Extend\ObjectEx.cs" />
-    <Compile Include="Extend\TypeEx.cs" />
+    <Compile Include="Base\Code\AES.cs" />
+    <Compile Include="Base\Bytes.cs" />
+    <Compile Include="Base\Code\Hash.cs" />
+    <Compile Include="Base\Code\RCC.cs" />
+    <Compile Include="Base\Code\LUC.cs" />
+    <Compile Include="Base\Code\STC.cs" />
+    <Compile Include="Base\Extend\ArrayEx.cs" />
+    <Compile Include="Base\Extend\MathEx.cs" />
+    <Compile Include="Base\Extend\ObjectEx.cs" />
+    <Compile Include="Base\Extend\TypeEx.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Model\" />
-    <Folder Include="OS\Win32\" />
+    <Folder Include="Model\Message\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

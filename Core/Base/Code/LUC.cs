@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EPII
+namespace EPII.Code
 {
     /// <summary>
     /// local unique code

@@ -18,6 +18,12 @@ namespace EPII
 
         protected abstract void DisposeNative();
 
+        protected void GuardDisposed() 
+        {
+            if (_Disposed)
+                throw new ObjectDisposedException("ObjectEx");
+        }
+
         public void Dispose()
         {
             if (_Disposed)
