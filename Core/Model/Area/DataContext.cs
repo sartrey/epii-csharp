@@ -1,4 +1,4 @@
-﻿namespace EPII.Domain
+﻿namespace EPII.Area
 {
     public abstract class DataContext : ObjectEx
     {

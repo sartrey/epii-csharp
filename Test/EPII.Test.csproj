@@ -40,8 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Runner.cs" />
+    <Compile Include="Test.cs" />
+    <Compile Include="Test\CodeTest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Test\AreaTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\EPII.csproj">

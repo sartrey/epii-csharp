@@ -41,8 +41,13 @@
     <Compile Include="Base\Cache.cs" />
     <Compile Include="Base\Loop.cs" />
     <Compile Include="Base\Macro.cs" />
-    <Compile Include="Model\Domain\DataContext.cs" />
-    <Compile Include="Model\Runtime.cs" />
+    <Compile Include="DI\AreaModel.cs" />
+    <Compile Include="DI\Model.cs" />
+    <Compile Include="Model\Area\DataContext.cs" />
+    <Compile Include="Model\Area\Area.cs" />
+    <Compile Include="Model\Area\AreaContext.cs" />
+    <Compile Include="Model\Area\AreaHub.cs" />
+    <Compile Include="DI\Runtime.cs" />
     <Compile Include="Base\Table.cs" />
     <Compile Include="Base\Worker.cs" />
     <Compile Include="Base\Code\AES.cs" />
@@ -55,10 +60,11 @@
     <Compile Include="Base\Extend\MathEx.cs" />
     <Compile Include="Base\Extend\ObjectEx.cs" />
     <Compile Include="Base\Extend\TypeEx.cs" />
+    <Compile Include="Model\Area\Handler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Model\Message\" />
+    <Folder Include="Model\Flow\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

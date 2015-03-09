@@ -38,34 +38,39 @@ namespace EPII
         private void Routine()
         {
             while (true) {
-                if (!_IsRunning)
-                    break;
+                lock (_SyncRoot) {
+                    if (!_IsRunning)
+                        break;
+                }
                 _Action();
-                if (_MaxTimes > 0 && ++_Times == _MaxTimes)
-                    break;
+                lock (_SyncRoot) {
+                    if (_MaxTimes > 0 && ++_Times == _MaxTimes)
+                        break;
+                }
             }
-            _IsRunning = false;
         }
 
         public void Start()
         {
-            if (_Thread == null)
-                _Thread = new Thread(
-                    new ThreadStart(Routine));
-            _IsRunning = true;
-            _Thread.Start();
+            lock (_SyncRoot) {
+                if (_Thread == null)
+                    _Thread = new Thread(
+                        new ThreadStart(Routine));
+                _Thread.Start();
+                _IsRunning = true;
+            }
         }
 
         public void Stop(int timeout = 10000)
         {
-            if (_Thread == null)
-                return;
             lock (_SyncRoot) {
+                if (_Thread == null)
+                    return;
+                _Thread.Join(timeout);
+                if (_Thread.ThreadState != ThreadState.Stopped)
+                    _Thread.Abort();
                 _IsRunning = false;
             }
-            _Thread.Join(timeout);
-            if (_Thread.ThreadState != ThreadState.Stopped)
-                _Thread.Abort();
         }
     }
 }
