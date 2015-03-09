@@ -7,7 +7,8 @@ namespace EPII.Test
         static void Main(string[] args)
         {
             var runner = new Runner();
-            runner.Push(new CodeTest());
+            //runner.Push(new CodeTest());
+            runner.Push(new AreaTest());
             runner.Run();
         }
     }

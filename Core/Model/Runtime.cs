@@ -48,7 +48,7 @@ namespace EPII
                     if (model.GetType() == typeof(T))
                         return model as T;
                 }
-                var t = Activator.CreateInstance(typeof(T)) as T;
+                var t = (T)Activator.CreateInstance(typeof(T));
                 _Models.Add(t);
                 return t;
             }

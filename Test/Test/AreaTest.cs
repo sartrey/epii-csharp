@@ -24,6 +24,7 @@ namespace EPII.Test
             var area = areas["Identity"];
             var data = area.GetDataContext("EF");
             data.Setup();
+            data.Reset();
             var user_handler = area.GetHandler("User");
             user_handler.X("Login", "{username}", "{password}");
         }
