@@ -41,13 +41,13 @@
     <Compile Include="Base\Cache.cs" />
     <Compile Include="Base\Loop.cs" />
     <Compile Include="Base\Macro.cs" />
-    <Compile Include="DI\AreaModel.cs" />
-    <Compile Include="DI\Model.cs" />
+    <Compile Include="Model\AreaModel.cs" />
+    <Compile Include="Model\Model.cs" />
     <Compile Include="Model\Area\DataContext.cs" />
     <Compile Include="Model\Area\Area.cs" />
     <Compile Include="Model\Area\AreaContext.cs" />
     <Compile Include="Model\Area\AreaHub.cs" />
-    <Compile Include="DI\Runtime.cs" />
+    <Compile Include="Model\Runtime.cs" />
     <Compile Include="Base\Table.cs" />
     <Compile Include="Base\Worker.cs" />
     <Compile Include="Base\Code\AES.cs" />

@@ -20,7 +20,7 @@ namespace EPII.Test
         public void GetArea() 
         {
             var runtime = Runtime.Instance;
-            var areas = runtime.Use<AreaModel>();
+            var areas = runtime.Use<AreaModel>().AreaHub;
             var area = areas["Identity"];
             var data = area.GetDataContext("EF");
             data.Setup();

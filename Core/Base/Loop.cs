@@ -66,10 +66,10 @@ namespace EPII
             lock (_SyncRoot) {
                 if (_Thread == null)
                     return;
+                _IsRunning = false;
                 _Thread.Join(timeout);
                 if (_Thread.ThreadState != ThreadState.Stopped)
                     _Thread.Abort();
-                _IsRunning = false;
             }
         }
     }
