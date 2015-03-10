@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace EPII
 {
@@ -21,14 +22,14 @@ namespace EPII
         }
 
         protected object _SyncRoot = new object();
-        protected List<Model> _Models
-            = new List<Model>();
+        protected List<object> _SingletonModels
+            = new List<object>();
         protected Table<object> _Data
             = new Table<object>();
 
-        internal List<Model> Models 
+        internal List<object> SingletonModels 
         {
-            get { return _Models; }
+            get { return _SingletonModels; }
         }
 
         public Table<object> Data
@@ -40,17 +41,27 @@ namespace EPII
         {
         }
 
-        public T Use<T>() 
-            where T : Model
+        public T Use<T>()
+            where T : class
         {
-            lock (_SyncRoot) {
-                foreach (var model in _Models) {
-                    if (model.GetType() == typeof(T))
-                        return model as T;
-                }
+            var type = typeof(T) as MemberInfo;
+            var attrib = Attribute.GetCustomAttribute(
+                type, typeof(ModelAttribute)) as ModelAttribute;
+            if (attrib == null)
+                return null;
+            if (attrib.IsSingleton) {
                 var t = (T)Activator.CreateInstance(typeof(T));
-                _Models.Add(t);
                 return t;
+            } else {
+                lock (_SyncRoot) {
+                    foreach (var model in _SingletonModels) {
+                        if (model.GetType() == typeof(T))
+                            return model as T;
+                    }
+                    var t = (T)Activator.CreateInstance(typeof(T));
+                    _SingletonModels.Add(t);
+                    return t;
+                }
             }
         }
 

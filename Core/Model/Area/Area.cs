@@ -11,15 +11,22 @@ namespace EPII.Area
 
         public abstract string Name { get; }
 
-        protected Table<object> Shares 
+        public Table<object> Shares 
         {
             get { return _Shares; }
         }
 
         public Area() 
         {
+            CreateShares();
         }
 
-        public abstract AreaContext CreateContext();
+        protected virtual void CreateShares() 
+        {
+        }
+
+        internal abstract Handler[] CreateHandlers();
+
+        internal abstract DataContext[] CreateDataContexts();
     }
 }

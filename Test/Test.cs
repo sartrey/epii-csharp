@@ -25,13 +25,19 @@ namespace EPII.Test
 
         public bool HasNext()
         {
-            return _Index != -1;
+            return _Actions.Count != 0 && _Index != -1;
+        }
+
+        public void MoveNext() 
+        {
+            _Index++;
+            if (_Index == _Actions.Count)
+                _Index = -1;
         }
 
         public void Perform() 
         {
             _Actions[_Index]();
-            _Index++;
         }
     }
 }

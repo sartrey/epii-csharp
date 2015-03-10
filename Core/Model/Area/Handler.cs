@@ -1,30 +1,31 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace EPII.Area
 {
     public abstract class Handler
     {
-        protected Area _Area
+        protected AreaContext _Context
             = null;
 
-        public Area Area
+        public AreaContext Context
         {
-            get { return _Area; }
+            get { return _Context; }
+            internal set { _Context = value; }
         }
 
         public abstract string Name { get; }
 
-        public Handler(Area area)
+        public Handler(AreaContext context)
         {
-            _Area = area;
+            _Context = context;
         }
 
-        public void Perform() 
-        {
-        }
+        public abstract dynamic Process(string request, dynamic data);
 
-        public void X() 
+        public dynamic X(string request, dynamic data) 
         {
+            return Process(request, data);
         }
     }
 }

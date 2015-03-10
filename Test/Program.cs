@@ -1,4 +1,5 @@
 ﻿using EPII.Code;
+using System;
 
 namespace EPII.Test
 {
@@ -8,8 +9,10 @@ namespace EPII.Test
         {
             var runner = new Runner();
             //runner.Push(new CodeTest());
-            runner.Push(new AreaTest());
-            runner.Run();
+            runner.Push(new DynDictTest());
+            runner.Run(1);
+            Console.WriteLine();
+            Console.ReadKey();
         }
     }
 }

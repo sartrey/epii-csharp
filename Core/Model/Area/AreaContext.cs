@@ -1,22 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 
 namespace EPII.Area
 {
-    public abstract class AreaContext : ObjectEx
+    public class AreaContext : ObjectEx
     {
-        protected Area _Area = null;
-        protected Handler[] _Handlers = null;
-        protected DataContext[] _DataContexts = null;
+        private Area _Area = null;
+        private Handler[] _Handlers = null;
+        private DataContext[] _DataContexts = null;
 
-        internal Handler[] Handlers 
+        private Handler[] Handlers 
         {
             get { return _Handlers; }
         }
 
-        internal DataContext[] DataContexts
+        private DataContext[] DataContexts
         {
             get { return _DataContexts; }
         }
@@ -24,28 +21,26 @@ namespace EPII.Area
         public AreaContext(Area area) 
         {
             _Area = area;
-            CreateHandlers();
-            CreateDataContexts();
+            _Handlers = area.CreateHandlers();
+            _DataContexts = area.CreateDataContexts();
         }
-
-        protected abstract void CreateHandlers();
-
-        protected abstract void CreateDataContexts();
 
         public Handler GetHandler(string name)
         {
-            foreach (var handler in _Handlers)
-                if (handler.Name == name)
-                    return handler;
-            return null;
+            return _Handlers.FirstOrDefault(
+                (e) => { return e.Name == name; });
         }
 
         public DataContext GetDataContext(string name)
         {
+            return _DataContexts.FirstOrDefault(
+                (e) => { return e.Name == name; });
+        }
+
+        public void Commit()
+        {
             foreach (var context in _DataContexts)
-                if (context.Name == name)
-                    return context;
-            return null;
+                context.Commit();
         }
 
         protected override void DisposeManaged()
@@ -54,7 +49,6 @@ namespace EPII.Area
                 context.Close();
                 context.Dispose();
             }
-            _Area = null;
         }
 
         protected override void DisposeNative()

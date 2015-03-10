@@ -42,7 +42,7 @@
     <Compile Include="Base\Loop.cs" />
     <Compile Include="Base\Macro.cs" />
     <Compile Include="Model\AreaModel.cs" />
-    <Compile Include="Model\Model.cs" />
+    <Compile Include="Model\ModelAttribute.cs" />
     <Compile Include="Model\Area\DataContext.cs" />
     <Compile Include="Model\Area\Area.cs" />
     <Compile Include="Model\Area\AreaContext.cs" />

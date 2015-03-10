@@ -8,13 +8,13 @@ namespace EPII.Test
     {
         private List<Test> _Tests = new List<Test>();
 
-        public void Push(Test test) 
+        public void Push(Test test)
         {
             test.Prepare();
             _Tests.Add(test);
         }
 
-        public void Run()
+        public void Run(int loop = 1)
         {
             foreach (var test in _Tests) {
                 test.Reset();
@@ -22,7 +22,9 @@ namespace EPII.Test
                     try {
                         var watch = new Stopwatch();
                         watch.Start();
-                        test.Perform();
+                        for (int i = 0; i < loop; i++)
+                            test.Perform();
+                        test.MoveNext();
                         watch.Stop();
                         Console.WriteLine(
                             string.Format(

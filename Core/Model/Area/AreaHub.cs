@@ -23,7 +23,7 @@ namespace EPII.Area
             {
                 foreach (var area in _Areas)
                     if (area.Name == name)
-                        return area.CreateContext();
+                        return new AreaContext(area);
                 return null;
             }
         }
@@ -34,20 +34,25 @@ namespace EPII.Area
             {
                 foreach (var area in _Areas)
                     if (area.Id == id)
-                        return area.CreateContext();
+                        return new AreaContext(area);
                 return null;
             }
         }
 
         public void Add(Area area)
         {
-            if (this[area.Id] == null)
+            var exist = _Areas.Exists(
+                (e) => { return e.Id == area.Id; });
+            if (!exist)
                 _Areas.Add(area);
         }
 
         public void Remove(Area area)
         {
-            _Areas.Remove(area);
+            var old = _Areas.Find(
+                (e) => { return e.Id == area.Id; });
+            if (old != null)
+                _Areas.Remove(old);
         }
     }
 }

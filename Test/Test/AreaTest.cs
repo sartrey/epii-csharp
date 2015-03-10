@@ -14,10 +14,11 @@ namespace EPII.Test
 
         public override void Prepare()
         {
-            AddAction(GetArea);
+            //AddAction(SetupData);
+            //AddAction(GetHandler);
         }
 
-        public void GetArea() 
+        public void SetupData() 
         {
             var runtime = Runtime.Instance;
             var areas = runtime.Use<AreaModel>().AreaHub;
@@ -25,8 +26,15 @@ namespace EPII.Test
             var data = area.GetDataContext("EF");
             data.Setup();
             data.Reset();
+        }
+
+        public void GetHandler() 
+        {
+            var runtime = Runtime.Instance;
+            var areas = runtime.Use<AreaModel>().AreaHub;
+            var area = areas["Identity"];
             var user_handler = area.GetHandler("User");
-            user_handler.X("Login", "{username}", "{password}");
+            var data = user_handler.X("Login", new { username = "test", password = "test" });
         }
     }
 }
