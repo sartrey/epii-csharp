@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 
 namespace EPII.Area
 {
@@ -18,11 +19,20 @@ namespace EPII.Area
 
         internal void CacheHandlers() 
         {
+            var valid = new Func<MethodInfo, bool>(
+                (e) => {
+                    if (e.ReturnType != typeof(object))
+                        return false;
+                    var ps = e.GetParameters();
+                    if (ps.Length != 2 ||
+                        ps[0].ParameterType != typeof(AreaContext) ||
+                        ps[1].ParameterType != typeof(object))
+                        return false;
+                    return true;
+                });
             var methods = GetType().GetMethods();
             foreach (var method in methods) {
-                var attrib = Attribute.GetCustomAttribute(
-                    method, typeof(HandlerAttribute));
-                if (attrib != null) {
+                if (valid(method)) {
                     var d = (SiteHandler)Delegate.CreateDelegate(
                         typeof(SiteHandler), method);
                     _Handlers.Add(method.Name, d);

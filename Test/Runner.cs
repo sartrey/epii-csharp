@@ -24,7 +24,6 @@ namespace EPII.Test
                         watch.Start();
                         for (int i = 0; i < loop; i++)
                             test.Perform();
-                        test.MoveNext();
                         watch.Stop();
                         Console.WriteLine(
                             string.Format(
@@ -35,6 +34,7 @@ namespace EPII.Test
                             string.Format("<test error in {0}>:{1}",
                                 test.Id, ex.Message));
                     }
+                    test.MoveNext();
                 }
             }
         }

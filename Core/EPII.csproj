@@ -42,7 +42,6 @@
     <Compile Include="Base\Loop.cs" />
     <Compile Include="Base\Macro.cs" />
     <Compile Include="Model\AreaModel.cs" />
-    <Compile Include="Model\Area\HandlerAttribute.cs" />
     <Compile Include="Model\Area\Site.cs" />
     <Compile Include="Model\Area\SiteContext.cs" />
     <Compile Include="Model\ModelAttribute.cs" />

@@ -23,7 +23,10 @@
 
         public dynamic Process(string request, dynamic data)
         {
-            return _Site.Handlers[request].Invoke(_Context, data);
+            var action = _Site.Handlers[request];
+            if (action == null)
+                return null;
+            return action.Invoke(_Context, data);
         }
 
         public dynamic X(string request, dynamic data)
