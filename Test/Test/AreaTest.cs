@@ -33,8 +33,9 @@ namespace EPII.Test
             var runtime = Runtime.Instance;
             var areas = runtime.Use<AreaModel>().AreaHub;
             var area = areas["Identity"];
-            var user_handler = area.GetHandler("User");
-            var data = user_handler.X("Login", new { username = "test", password = "test" });
+            var user_site = area.GetSiteContext("User");
+            var data = user_site.X("Login", 
+                new { username = "test", password = "test" });
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace EPII
 {
-    [Model(IsSingleton = true)]
+    [Model(LifeCycle = ModelLifeCycle.Singleton)]
     public class AreaModel
     {
         private AreaHub _AreaHub

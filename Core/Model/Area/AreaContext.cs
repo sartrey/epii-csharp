@@ -5,34 +5,30 @@ namespace EPII.Area
     public class AreaContext : ObjectEx
     {
         private Area _Area = null;
-        private Handler[] _Handlers = null;
         private DataContext[] _DataContexts = null;
 
-        private Handler[] Handlers 
+        public Area Area 
         {
-            get { return _Handlers; }
-        }
-
-        private DataContext[] DataContexts
-        {
-            get { return _DataContexts; }
+            get { return _Area; }
         }
 
         public AreaContext(Area area) 
         {
             _Area = area;
-            _Handlers = area.CreateHandlers();
-            _DataContexts = area.CreateDataContexts();
         }
 
-        public Handler GetHandler(string name)
+        public SiteContext GetSiteContext(string name)
         {
-            return _Handlers.FirstOrDefault(
-                (e) => { return e.Name == name; });
+            var site = _Area.GetSite(name);
+            if (site == null)
+                return null;
+            return new SiteContext(site, this);
         }
 
         public DataContext GetDataContext(string name)
         {
+            if (_DataContexts == null)
+                _DataContexts = _Area.CreateDataContexts();
             return _DataContexts.FirstOrDefault(
                 (e) => { return e.Name == name; });
         }

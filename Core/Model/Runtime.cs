@@ -49,12 +49,13 @@ namespace EPII
                 type, typeof(ModelAttribute)) as ModelAttribute;
             if (attrib == null)
                 return null;
-            if (attrib.IsSingleton) {
+            if (attrib.LifeCycle == ModelLifeCycle.Transient) {
                 var t = (T)Activator.CreateInstance(typeof(T));
                 return t;
-            } else {
+            } else if(attrib.LifeCycle == ModelLifeCycle.Singleton) {
                 lock (_SyncRoot) {
                     foreach (var model in _SingletonModels) {
+
                         if (model.GetType() == typeof(T))
                             return model as T;
                     }
@@ -63,6 +64,7 @@ namespace EPII
                     return t;
                 }
             }
+            return null;
         }
 
         protected override void DisposeManaged()

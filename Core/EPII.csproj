@@ -42,6 +42,9 @@
     <Compile Include="Base\Loop.cs" />
     <Compile Include="Base\Macro.cs" />
     <Compile Include="Model\AreaModel.cs" />
+    <Compile Include="Model\Area\HandlerAttribute.cs" />
+    <Compile Include="Model\Area\Site.cs" />
+    <Compile Include="Model\Area\SiteContext.cs" />
     <Compile Include="Model\ModelAttribute.cs" />
     <Compile Include="Model\Area\DataContext.cs" />
     <Compile Include="Model\Area\Area.cs" />
@@ -60,7 +63,6 @@
     <Compile Include="Base\Extend\MathEx.cs" />
     <Compile Include="Base\Extend\ObjectEx.cs" />
     <Compile Include="Base\Extend\TypeEx.cs" />
-    <Compile Include="Model\Area\Handler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
