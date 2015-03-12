@@ -39,18 +39,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\Cache.cs" />
-    <Compile Include="Base\Loop.cs" />
+    <Compile Include="Base\Thread\Loop.cs" />
     <Compile Include="Base\Macro.cs" />
     <Compile Include="Model\AreaModel.cs" />
     <Compile Include="Model\Area\Site.cs" />
+    <Compile Include="Base\Collection\Pipe.cs" />
+    <Compile Include="Model\Http\Server.cs" />
     <Compile Include="Model\ModelAttribute.cs" />
     <Compile Include="Model\Area\DataContext.cs" />
     <Compile Include="Model\Area\Area.cs" />
     <Compile Include="Model\Area\AreaContext.cs" />
     <Compile Include="Model\Area\AreaHub.cs" />
     <Compile Include="Model\Runtime.cs" />
-    <Compile Include="Base\Table.cs" />
-    <Compile Include="Base\Worker.cs" />
+    <Compile Include="Base\Collection\Table.cs" />
+    <Compile Include="Base\Thread\Worker.cs" />
     <Compile Include="Base\Code\AES.cs" />
     <Compile Include="Base\Bytes.cs" />
     <Compile Include="Base\Code\Hash.cs" />
@@ -65,7 +67,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Model\Flow\" />
-    <Folder Include="Model\Plugin\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

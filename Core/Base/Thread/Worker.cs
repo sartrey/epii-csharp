@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 
@@ -7,9 +6,8 @@ namespace EPII
 {
     public class Worker
     {
-        private object _SyncRoot = new object();
-        private Queue<Action> _Jobs
-            = new Queue<Action>();
+        private Pipe<Action> _Jobs
+            = new Pipe<Action>();
         private Loop _Loop = null;
 
         public Worker()
@@ -20,10 +18,8 @@ namespace EPII
         private void Routine()
         {
             Action job = null;
-            lock (_SyncRoot) {
-                if (_Jobs.Count != 0)
-                    job = _Jobs.Dequeue();
-            }
+            if (_Jobs.Count != 0)
+                job = _Jobs.Pull();
             if (job == null)
                 Thread.Sleep(50);
             else {
@@ -38,9 +34,7 @@ namespace EPII
         public void Push(Action job)
         {
             if (job != null) {
-                lock (_SyncRoot) {
-                    _Jobs.Enqueue(job);
-                }
+                _Jobs.Push(job);
             }
         }
 
