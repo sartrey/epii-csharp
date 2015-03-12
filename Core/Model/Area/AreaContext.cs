@@ -5,6 +5,7 @@ namespace EPII.Area
     public class AreaContext : ObjectEx
     {
         private Area _Area = null;
+        private Site[] _Sites = null;
         private DataContext[] _DataContexts = null;
 
         public Area Area 
@@ -17,12 +18,12 @@ namespace EPII.Area
             _Area = area;
         }
 
-        public SiteContext GetSiteContext(string name)
+        public Site GetSite(string name)
         {
-            var site = _Area.GetSite(name);
-            if (site == null)
-                return null;
-            return new SiteContext(site, this);
+            if (_Sites == null)
+                _Sites = _Area.CreateSites();
+            return _Sites.FirstOrDefault(
+                (e) => { return e.Name == name; });
         }
 
         public DataContext GetDataContext(string name)

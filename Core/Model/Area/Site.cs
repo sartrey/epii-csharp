@@ -1,43 +1,44 @@
 ﻿using System;
-using System.Reflection;
 
 namespace EPII.Area
 {
+    internal delegate dynamic XHandler(dynamic data);
+
     public abstract class Site
     {
-        internal delegate dynamic SiteHandler(
-            AreaContext context, dynamic data);
-        internal Table<SiteHandler> _Handlers 
-            = new Table<SiteHandler>();
+        protected AreaContext _Context = null;
 
-        internal Table<SiteHandler> Handlers 
+        public AreaContext Context
         {
-            get { return _Handlers; }
+            get { return _Context; }
         }
 
         public abstract string Name { get; }
 
-        internal void CacheHandlers() 
+        public Site(AreaContext context) 
         {
-            var valid = new Func<MethodInfo, bool>(
-                (e) => {
-                    if (e.ReturnType != typeof(object))
-                        return false;
-                    var ps = e.GetParameters();
-                    if (ps.Length != 2 ||
-                        ps[0].ParameterType != typeof(AreaContext) ||
-                        ps[1].ParameterType != typeof(object))
-                        return false;
-                    return true;
-                });
+            _Context = context;
+        }
+
+        public dynamic X(string request, dynamic data)
+        {
+            var handler = _Context.Area.XHandlers[request];
+            if (handler != null)
+                return handler(data);
             var methods = GetType().GetMethods();
             foreach (var method in methods) {
-                if (valid(method)) {
-                    var d = (SiteHandler)Delegate.CreateDelegate(
-                        typeof(SiteHandler), method);
-                    _Handlers.Add(method.Name, d);
+                if (method.Name == request) {
+                    try {
+                        handler = (XHandler)Delegate.CreateDelegate(
+                            typeof(XHandler), method);
+                        _Context.Area.XHandlers.Add(request, handler);
+                        return handler(data);
+                    } catch {
+                        return null;
+                    }
                 }
             }
+            return null;
         }
     }
 }
