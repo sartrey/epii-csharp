@@ -31,6 +31,7 @@ namespace EPII.UI.WinForms
             set { Header = value; }
         }
 
+        [Category("Field")]
         public string Header 
         {
             get { return _HeaderText; }
@@ -42,6 +43,7 @@ namespace EPII.UI.WinForms
             }
         }
 
+        [Category("Field")]
         public string Note 
         {
             get { return _NoteText; }
@@ -53,40 +55,25 @@ namespace EPII.UI.WinForms
             }
         }
 
+        [Category("Field")]
         public bool IsSpanLocked 
         {
             get { return _IsSpanLocked; }
             set { _IsSpanLocked = value; }
         }
 
+        [Category("Field")]
         public int HeaderSpan
         {
             get { return _HeaderSize.Width; }
             set { _HeaderSize.Width = value; }
         }
 
+        [Category("Field")]
         public int NoteSpan 
         {
             get { return _NoteSize.Width; }
             set { _NoteSize.Width = value; }
-        }
-
-        [Browsable(false)]
-        public Control Input
-        {
-            get { return Controls.Count > 0 ? Controls[0] : null; }
-            set 
-            {
-                var input = Input;
-                if (value == input)
-                    return;
-                if (input != null)
-                    input.Dispose();
-                input = value;
-                Controls.Clear();
-                Controls.Add(input);
-                OnSizeChanged(null);
-            }
         }
 
         public FieldControl()
@@ -94,8 +81,7 @@ namespace EPII.UI.WinForms
             SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             BackColor = Color.Transparent;
             Width = 300;
-            Height = 30;
-            Header = "Header";
+            Height = 24;
             Note = "Note";
         }
 
@@ -112,17 +98,17 @@ namespace EPII.UI.WinForms
 
         protected override void OnSizeChanged(EventArgs e)
         {
-            var input = Input;
-            if (input != null) {
-                input.Top = Padding.Top;
-                input.Left = Padding.Left + _HeaderSize.Width + 3;
+            var content = GetContent();
+            if (content != null) {
+                content.Top = Padding.Top;
+                content.Left = Padding.Left + _HeaderSize.Width + 3;
                 var width = Width - 6
                     - Padding.Left - Padding.Right
                     - HeaderSpan - NoteSpan;
                 if (width < 0)
                     width = 0;
-                input.Width = width;
-                input.Height = Height - Padding.Top - Padding.Bottom;
+                content.Width = width;
+                content.Height = Height - Padding.Top - Padding.Bottom;
             }
             base.OnSizeChanged(e);
             Refresh();
@@ -137,14 +123,32 @@ namespace EPII.UI.WinForms
             }
         }
 
+        public Control GetContent() 
+        {
+            return Controls.Count > 0 ? Controls[0] : null;
+        }
+
+        public void SetContent(Control control) 
+        {
+            var old_content = GetContent();
+            if (control == old_content)
+                return;
+            if (old_content != null)
+                old_content.Dispose();
+            Controls.Clear();
+            Controls.Add(control);
+            OnSizeChanged(null);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing) 
             {
-                var input = Input;
-                if (input != null)
-                    input.Dispose();
+                var content = GetContent();
+                if (content != null)
+                    content.Dispose();
                 Controls.Clear();
+                _TextBrush.Dispose();
             }
             base.Dispose(disposing);
         }

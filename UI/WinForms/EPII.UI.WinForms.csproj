@@ -40,7 +40,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\BrowseField.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\DateField.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\FieldControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\SelectField.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\TextField.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\ToolStripTextBoxEx.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
