@@ -43,6 +43,9 @@
     <Compile Include="Controls\BrowseField.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\DataCard.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\DateField.cs">
       <SubType>Component</SubType>
     </Compile>
