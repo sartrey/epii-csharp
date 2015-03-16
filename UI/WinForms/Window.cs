@@ -15,35 +15,15 @@ namespace EPII.UI.WinForms
             set { _IsSizeLocked = value; }
         }
 
-        public View View
-        {
-            get { return Controls.Count > 0 ? Controls[0] as View : null; }
-            set
-            {
-                var view = View;
-                if (view == value)
-                    return;
-                if (view != null) {
-                    Controls.Clear();
-                    view.Dispose();
-                }
-                if (value != null) {
-                    _LockSize = ClientSize = value.Size;
-                    value.Dock = DockStyle.Fill;
-                    Controls.Add(value);
-                }
-            }
-        }
-
         public Window(View view)
         {
-            View = view;
+            SetView(view);
+            StartPosition = FormStartPosition.CenterScreen;
         }
 
-        public void FinishDialog(DialogResult result)
+        protected void CopyStyle(View view) 
         {
-            this.DialogResult = result;
-            this.Close();
+            Text = view.Text;
         }
 
         protected override void OnResizeEnd(EventArgs e)
@@ -56,11 +36,39 @@ namespace EPII.UI.WinForms
         protected override void Dispose(bool disposing)
         {
             if (disposing) {
-                var view = View;
+                var view = GetView();
                 if (view != null)
                     view.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public View GetView() 
+        {
+            return Controls.Count > 0 ? Controls[0] as View : null;
+        }
+
+        public void SetView(View view) 
+        {
+            var old_view = GetView();
+            if (old_view == view)
+                return;
+            if (old_view != null) {
+                Controls.Clear();
+                old_view.Dispose();
+            }
+            if (view != null) {
+                _LockSize = ClientSize = view.Size;
+                view.Dock = DockStyle.Fill;
+                Controls.Add(view);
+            }
+            CopyStyle(view);
+        }
+
+        public void FinishDialog(DialogResult result)
+        {
+            this.DialogResult = result;
+            this.Close();
         }
     }
 }

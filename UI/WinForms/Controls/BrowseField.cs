@@ -85,6 +85,7 @@ namespace EPII.UI.WinForms
         public BrowseField()
         {
             var label = new Label();
+            label.AutoSize = false;
             label.TextAlign = ContentAlignment.MiddleCenter;
             label.MouseMove += Browse_MouseMove;
             label.MouseLeave += Browse_MouseLeave;

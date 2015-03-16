@@ -148,7 +148,8 @@ namespace EPII.UI.WinForms
                 if (content != null)
                     content.Dispose();
                 Controls.Clear();
-                _TextBrush.Dispose();
+                if(_TextBrush != null)
+                    _TextBrush.Dispose();
             }
             base.Dispose(disposing);
         }

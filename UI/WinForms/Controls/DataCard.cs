@@ -63,6 +63,7 @@ namespace EPII.UI.WinForms
                 var input = new TextField();
                 input.Text = column.ColumnName;
                 input.Note = "";
+                input.Padding = new Padding(2);
                 if (row != null)
                 {
                     input.InputText = row[i].ToString();

@@ -39,10 +39,10 @@ namespace EPII.UI.WinForms
                 else
                     _Mutex = new object();
             }
-
         }
 
         public View(object model)
+            : this()
         {
             _Model = model;
         }
@@ -55,6 +55,10 @@ namespace EPII.UI.WinForms
         public virtual bool UpdateModel(bool render = true)
         {
             return true;
+        }
+
+        protected virtual void ApplyStyle() 
+        {
         }
 
         protected virtual void OnParentClosing(FormClosingEventArgs e)
@@ -79,6 +83,16 @@ namespace EPII.UI.WinForms
                 _Handlers["closing"] = handler_closing;
             }
             base.OnParentChanged(e);
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            try {
+                ApplyStyle();
+            } catch {
+                Console.WriteLine("failed to apply style");
+            }
+            base.OnLoad(e);
         }
 
         protected override void Dispose(bool disposing)

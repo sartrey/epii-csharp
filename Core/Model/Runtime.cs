@@ -6,6 +6,7 @@ namespace EPII
 {
     public class Runtime : ObjectEx
     {
+        private static object _CtorMutex = null;
         private static Runtime _Instance = null;
 
         /// <summary>
@@ -19,6 +20,15 @@ namespace EPII
                     _Instance = new Runtime();
                 return _Instance;
             }
+        }
+
+        public static void Register<T>(bool locked = false)
+            where T : Runtime, new()
+        {
+            if(_CtorMutex == null)
+                _Instance = new T();
+            if (locked)
+                _CtorMutex = new object();
         }
 
         protected object _SyncRoot = new object();
@@ -70,7 +80,7 @@ namespace EPII
         protected override void DisposeManaged()
         {
             foreach (var key in _Data.Keys) {
-                var item = _Data[key] as ObjectEx;
+                var item = _Data[key] as IDisposable;
                 if (item != null)
                     item.Dispose();
             }
