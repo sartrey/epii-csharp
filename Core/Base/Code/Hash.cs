@@ -28,6 +28,11 @@ namespace EPII.Code
         {
         }
 
+        public Hash(string text)
+        {
+            SetText(text);
+        }
+
         public Hash(Stream stream)
         {
             _Stream = stream;
@@ -41,6 +46,14 @@ namespace EPII.Code
             foreach (byte b in codes)
                 sbd.Append(b.ToString("x2"));
             return sbd.ToString();
+        }
+
+        public void SetText(string text) 
+        {
+            if(_Stream != null)
+                _Stream.Close();
+            _Stream = new MemoryStream(
+                _Encoding.GetBytes(text));
         }
 
         public string GetMD5()
