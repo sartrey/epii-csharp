@@ -4,47 +4,47 @@ namespace EPII.Area
 {
     public class AreaContext : ObjectEx
     {
-        private Area _Area = null;
-        private Site[] _Sites = null;
-        private DataContext[] _DataContexts = null;
+        public static AreaContext GetCurrentContext(Area area)
+        {
+            var contexts = ContextTable.CurrentContextTable;
+            var context = contexts[area.Name];
+            if (context == null)
+                contexts[area.Name] = new AreaContext(area);
+            return context;
+        }
 
-        public Area Area 
+        private Area _Area = null;
+        private DataAccess[] _DataAccesses = null;
+
+        public Area Area
         {
             get { return _Area; }
         }
 
-        public AreaContext(Area area) 
+        private AreaContext(Area area)
         {
             _Area = area;
         }
 
-        public Site GetSite(string name)
+        public DataAccess GetDataAccess(string name)
         {
-            if (_Sites == null)
-                _Sites = _Area.CreateSites();
-            return _Sites.FirstOrDefault(
-                (e) => { return e.Name == name; });
-        }
-
-        public DataContext GetDataContext(string name)
-        {
-            if (_DataContexts == null)
-                _DataContexts = _Area.CreateDataContexts();
-            return _DataContexts.FirstOrDefault(
+            if (_DataAccesses == null)
+                _DataAccesses = _Area.CreateDataAccesses();
+            return _DataAccesses.FirstOrDefault(
                 (e) => { return e.Name == name; });
         }
 
         public void Commit()
         {
-            foreach (var context in _DataContexts)
-                context.Commit();
+            foreach (var access in _DataAccesses)
+                access.Commit();
         }
 
         protected override void DisposeManaged()
         {
-            foreach (var context in _DataContexts) {
-                context.Close();
-                context.Dispose();
+            foreach (var access in _DataAccesses) {
+                access.Close();
+                access.Dispose();
             }
         }
 

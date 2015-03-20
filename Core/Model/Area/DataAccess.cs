@@ -1,6 +1,6 @@
 ﻿namespace EPII.Area
 {
-    public abstract class DataContext : ObjectEx
+    public abstract class DataAccess : ObjectEx
     {
         protected bool _IsOpen;
 
@@ -38,8 +38,8 @@
                 CommitHandler();
         }
 
-        public abstract void Setup();
+        public abstract void Install();
 
-        public abstract void Reset();
+        public abstract void Uninstall();
     }
 }

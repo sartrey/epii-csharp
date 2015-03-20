@@ -42,11 +42,11 @@
     <Compile Include="Base\Thread\Loop.cs" />
     <Compile Include="Base\Macro.cs" />
     <Compile Include="Model\AreaModel.cs" />
-    <Compile Include="Model\Area\Site.cs" />
+    <Compile Include="Model\Area\ContextTable.cs" />
+    <Compile Include="Model\Area\Service.cs" />
     <Compile Include="Base\Collection\Pipe.cs" />
-    <Compile Include="Model\Http\Server.cs" />
     <Compile Include="Model\ModelAttribute.cs" />
-    <Compile Include="Model\Area\DataContext.cs" />
+    <Compile Include="Model\Area\DataAccess.cs" />
     <Compile Include="Model\Area\Area.cs" />
     <Compile Include="Model\Area\AreaContext.cs" />
     <Compile Include="Model\Area\AreaHub.cs" />

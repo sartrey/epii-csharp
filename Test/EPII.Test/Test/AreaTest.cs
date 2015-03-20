@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EPII.Area;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,23 +19,25 @@ namespace EPII.Test
             //AddAction(GetHandler);
         }
 
-        public void SetupData() 
+        public void SetupData()
         {
             var runtime = Runtime.Instance;
             var areas = runtime.Use<AreaModel>().AreaHub;
             var area = areas["Identity"];
-            var data = area.GetDataContext("EF");
-            data.Setup();
-            data.Reset();
+            var context = AreaContext.GetCurrentContext(area);
+            var data = context.GetDataAccess("EntityFramework");
+            data.Install();
+            data.Uninstall();
         }
 
-        public void GetHandler() 
+        public void GetHandler()
         {
             var runtime = Runtime.Instance;
             var areas = runtime.Use<AreaModel>().AreaHub;
             var area = areas["Identity"];
-            var user_site = area.GetSite("User");
-            var data = user_site.X("Login", 
+            var user_service = area.GetService("User");
+            //var user_service = area.GetService<IUserService>();
+            var data = user_service.X("Login",
                 new { username = "test", password = "test" });
         }
     }

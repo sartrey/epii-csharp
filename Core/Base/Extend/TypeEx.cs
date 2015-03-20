@@ -6,14 +6,14 @@ namespace EPII
 {
     public class TypeEx
     {
-        private Type _Root;
+        private Type _Type;
 
         /// <summary>
         /// get root type
         /// </summary>
-        public Type Root
+        public Type Type
         {
-            get { return _Root; }
+            get { return _Type; }
         }
 
         /// <summary>
@@ -21,12 +21,12 @@ namespace EPII
         /// </summary>
         public string Path
         {
-            get { return _Root.Assembly.Location; }
+            get { return _Type.Assembly.Location; }
         }
 
-        public TypeEx(Type root)
+        public TypeEx(Type type)
         {
-            _Root = root;
+            _Type = type;
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace EPII
         /// </summary>
         public bool HasInterface(Type target)
         {
-            var temp = _Root.GetInterface(target.Name);
+            var temp = _Type.GetInterface(target.Name);
             return temp == target;
         }
 
@@ -43,7 +43,7 @@ namespace EPII
         /// </summary>
         public bool HasBaseType(Type target)
         {
-            var temp = _Root;
+            var temp = _Type;
             while (temp != null && temp != target)
                 temp = temp.BaseType;
             return temp != null;
@@ -57,9 +57,9 @@ namespace EPII
             var types = assembly.GetTypes();
             foreach (var type in types) {
                 var typex = new TypeEx(type);
-                if (typex.HasInterface(_Root))
+                if (typex.HasInterface(_Type))
                     yield return type;
-                if (typex.HasBaseType(_Root))
+                if (typex.HasBaseType(_Type))
                     yield return type;
             }
         }

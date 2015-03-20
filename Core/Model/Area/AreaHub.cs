@@ -17,25 +17,21 @@ namespace EPII.Area
             get { return _Areas.Count; }
         }
 
-        public AreaContext this[string name]
+        public Area this[string name]
         {
             get
             {
-                foreach (var area in _Areas)
-                    if (area.Name == name)
-                        return new AreaContext(area);
-                return null;
+                return _Areas.Find(
+                    (e) => { return e.Name == name; });
             }
         }
 
-        public AreaContext this[Guid id]
+        public Area this[Guid id]
         {
             get
             {
-                foreach (var area in _Areas)
-                    if (area.Id == id)
-                        return new AreaContext(area);
-                return null;
+                return _Areas.Find(
+                    (e) => { return e.Id == id; });
             }
         }
 

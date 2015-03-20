@@ -47,8 +47,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Test\AreaTest.cs" />
     <Compile Include="Test\DynDictTest.cs" />
-    <Compile Include="Test\HttpTest.cs" />
-    <Compile Include="Test\ReflectionTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\EPII.csproj">
