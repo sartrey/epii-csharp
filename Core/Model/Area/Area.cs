@@ -25,8 +25,8 @@ namespace EPII.Area
             var services = new List<Service>();
             foreach (var type in types) {
                 if (type.BaseType == typeof(Service))
-                    services.Add(Activator
-                        .CreateInstance(type, this) as Service);
+                    services.Add((Service)
+                        Activator.CreateInstance(type, this));
             }
             _Services = services.ToArray();
         }

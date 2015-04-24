@@ -31,16 +31,11 @@ namespace EPII
                 _CtorMutex = new object();
         }
 
-        protected object _SyncRoot = new object();
-        protected List<object> _SingletonModels
-            = new List<object>();
-        protected Table<object> _Data
+        private object _SyncRoot = new object();
+        private List<IModel> _Models
+            = new List<IModel>();
+        private Table<object> _Data
             = new Table<object>();
-
-        internal List<object> SingletonModels 
-        {
-            get { return _SingletonModels; }
-        }
 
         public Table<object> Data
         {
@@ -52,29 +47,37 @@ namespace EPII
         }
 
         public T Use<T>()
-            where T : class
+            where T : IModel
         {
             var type = typeof(T) as MemberInfo;
             var attrib = Attribute.GetCustomAttribute(
                 type, typeof(ModelAttribute)) as ModelAttribute;
             if (attrib == null)
-                return null;
-            if (attrib.LifeCycle == ModelLifeCycle.Transient) {
+                throw new Exception("model attribute not found");
+            if (attrib.LifeCycle == LifeCycles.Transient) {
                 var t = (T)Activator.CreateInstance(typeof(T));
                 return t;
-            } else if(attrib.LifeCycle == ModelLifeCycle.Singleton) {
+            } else {
                 lock (_SyncRoot) {
-                    foreach (var model in _SingletonModels) {
-
-                        if (model.GetType() == typeof(T))
-                            return model as T;
-                    }
-                    var t = (T)Activator.CreateInstance(typeof(T));
-                    _SingletonModels.Add(t);
-                    return t;
+                    var t = attrib.LifeCycle == LifeCycles.Instance ? 
+                        _Models.Find(e => e.Identify()) : 
+                        _Models.Find(e => e.GetType() == typeof(T));
+                    if(t == null)
+                        t = (IModel)Activator.CreateInstance(typeof(T));
+                    _Models.Add(t);
+                    return (T)t;
                 }
             }
-            return null;
+        }
+
+        public T Use<T>(Action<IModelSettings> setup)
+            where T : IModel
+        {
+            var instance = Use<T>();
+            if (instance != null) {
+                setup(instance.Settings);
+            }
+            return instance;
         }
 
         protected override void DisposeManaged()

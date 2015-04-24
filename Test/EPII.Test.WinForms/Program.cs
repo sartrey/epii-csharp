@@ -7,15 +7,22 @@ namespace EPII.Test.WinForms
 {
     static class Program
     {
-        /// <summary>
-        /// 应用程序的主入口点。
-        /// </summary>
         [STAThread]
         static void Main()
         {
+            var runtime = Runtime.Instance;
+            var ui = runtime.Use<UI.UIModel>();
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmMain());
+
+            var window = ui.WindowPool.GetWindow();
+            var view = new TestView1();
+            ui.ViewHub.Add("test", view);
+            window.View = view;
+            window.Show();
+
+            Application.Run();
         }
     }
 }

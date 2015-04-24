@@ -49,6 +49,12 @@ namespace EPII.UI.WinForms
                 var item = _Options[index];
                 return item.Value;
             }
+            set 
+            {
+                var index = _Options.FindIndex(
+                    (e) => { return (int)(e.Value) == (int)value; });
+                (GetContent() as ComboBox).SelectedIndex = index;
+            }
         }
 
         public SelectField()

@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPII.Test", "Test\EPII.Test
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Test", ".Test", "{9C6CD282-BFA1-4369-9EBA-5CC6129015DF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPII.UI.WPF", "EPII.UI.WPF\EPII.UI.WPF.csproj", "{8B2ECA0F-D5AF-400E-8861-706140BE95D4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{B3DFD45F-31DB-4B5D-9CE5-ACB8AD5352BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3DFD45F-31DB-4B5D-9CE5-ACB8AD5352BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3DFD45F-31DB-4B5D-9CE5-ACB8AD5352BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B2ECA0F-D5AF-400E-8861-706140BE95D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B2ECA0F-D5AF-400E-8861-706140BE95D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B2ECA0F-D5AF-400E-8861-706140BE95D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B2ECA0F-D5AF-400E-8861-706140BE95D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

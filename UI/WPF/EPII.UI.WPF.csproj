@@ -4,19 +4,20 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{97D038BD-9CE3-443D-B93D-492D2BD0381D}</ProjectGuid>
+    <ProjectGuid>{8B2ECA0F-D5AF-400E-8861-706140BE95D4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EPII</RootNamespace>
-    <AssemblyName>EPII</AssemblyName>
+    <RootNamespace>EPII.UI.WPF</RootNamespace>
+    <AssemblyName>EPII.UI.WPF</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\Output\Debug\</OutputPath>
+    <OutputPath>..\..\Output\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -24,7 +25,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\Output\Release\</OutputPath>
+    <OutputPath>..\..\Output\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -33,50 +34,19 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base\Cache.cs" />
-    <Compile Include="Base\Thread\Loop.cs" />
-    <Compile Include="Base\Macro.cs" />
-    <Compile Include="Model\Area\AreaModel.cs" />
-    <Compile Include="Model\Area\ContextTable.cs" />
-    <Compile Include="Model\Area\Service.cs" />
-    <Compile Include="Base\Collection\Pipe.cs" />
-    <Compile Include="Model\IModelSettings.cs" />
-    <Compile Include="Model\IModel.cs" />
-    <Compile Include="Model\Area\DataAccess.cs" />
-    <Compile Include="Model\Area\Area.cs" />
-    <Compile Include="Model\Area\AreaContext.cs" />
-    <Compile Include="Model\Area\AreaHub.cs" />
-    <Compile Include="Model\ModelAttribute.cs" />
-    <Compile Include="Model\UI\IStyle.cs" />
-    <Compile Include="Model\UI\IWindowStyle.cs" />
-    <Compile Include="Model\UI\IView.cs" />
-    <Compile Include="Model\UI\IViewModel.cs" />
-    <Compile Include="Model\UI\IWindow.cs" />
-    <Compile Include="Model\Runtime.cs" />
-    <Compile Include="Base\Collection\Table.cs" />
-    <Compile Include="Base\Thread\Worker.cs" />
-    <Compile Include="Base\Code\AES.cs" />
-    <Compile Include="Base\Bytes.cs" />
-    <Compile Include="Base\Code\Hash.cs" />
-    <Compile Include="Base\Code\RCC.cs" />
-    <Compile Include="Base\Code\LUC.cs" />
-    <Compile Include="Base\Code\STC.cs" />
-    <Compile Include="Base\Extend\ArrayEx.cs" />
-    <Compile Include="Base\Extend\MathEx.cs" />
-    <Compile Include="Base\Extend\ObjectEx.cs" />
-    <Compile Include="Base\Extend\TypeEx.cs" />
-    <Compile Include="Model\UI\UIModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Model\UI\ViewHub.cs" />
-    <Compile Include="Model\UI\WindowPool.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Model\Flow\" />
+    <ProjectReference Include="..\Core\EPII.csproj">
+      <Project>{97d038bd-9ce3-443d-b93d-492d2bd0381d}</Project>
+      <Name>EPII</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

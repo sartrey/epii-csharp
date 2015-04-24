@@ -65,9 +65,11 @@
     <Compile Include="View.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="ViewEx.cs" />
     <Compile Include="Window.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="WindowEx.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\EPII.csproj">

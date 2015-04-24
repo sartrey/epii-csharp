@@ -2,9 +2,10 @@
 
 namespace EPII.Area
 {
+    //todo: replace CallContext to improve performance
     internal class ContextTable : Table<AreaContext>
     {
-        public static ContextTable CurrentContextTable
+        internal static ContextTable CurrentContextTable
         {
             get
             {

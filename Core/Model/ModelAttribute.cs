@@ -2,18 +2,22 @@
 
 namespace EPII
 {
-    public enum ModelLifeCycle
+    public enum LifeCycles
     {
+        Instance,
         Transient,
         Singleton
     }
 
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
+    [AttributeUsage(
+        AttributeTargets.Class, 
+        AllowMultiple = false, Inherited = true)]
     public class ModelAttribute : Attribute
     {
-        private ModelLifeCycle _LifeCycle = ModelLifeCycle.Transient;
+        private LifeCycles _LifeCycle 
+            = LifeCycles.Transient;
 
-        public ModelLifeCycle LifeCycle
+        public LifeCycles LifeCycle
         {
             get { return _LifeCycle; }
             set { _LifeCycle = value; }
