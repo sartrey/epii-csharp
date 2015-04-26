@@ -43,7 +43,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Core\EPII.csproj">
+    <ProjectReference Include="..\..\Core\EPII.csproj">
       <Project>{97d038bd-9ce3-443d-b93d-492d2bd0381d}</Project>
       <Name>EPII</Name>
     </ProjectReference>

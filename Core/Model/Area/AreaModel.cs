@@ -1,5 +1,4 @@
-﻿
-namespace EPII.Area
+﻿namespace EPII.Area
 {
     [Model(LifeCycle = LifeCycles.Singleton)]
     public class AreaModel : IModel

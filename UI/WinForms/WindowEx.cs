@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EPII.FEA;
+using System;
 using System.Windows.Forms;
 
 namespace EPII.UI.WinForms
@@ -8,44 +9,36 @@ namespace EPII.UI.WinForms
         private Form _WindowCore = null;
         private ViewEx _View = null;
 
-        public abstract string Id { get; set; }
+        public bool HasView
+        {
+            get { return _View != null; }
+        }
 
         public IView View
         {
             get { return _View; }
             set
             {
-                if (_View == value)
+                if (_View != null)
                     return;
                 var view = value as ViewEx;
                 if (view == null)
                     return;
-                _WindowCore.Controls.Clear();
-                if (_View != null)
-                    _View.Dispose();
                 _WindowCore.Controls.Add(view.ViewCore);
                 _View = view;
             }
         }
 
-        public IWindowStyle Style
+        public void Open()
         {
-            get { throw new NotImplementedException(); }
-        }
-
-        public void Show()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Hide()
-        {
-            throw new NotImplementedException();
+            _WindowCore.Show();
         }
 
         public void Close()
         {
-            throw new NotImplementedException();
+            _WindowCore.Hide();
+            _WindowCore.Controls.Clear();
+            _View = null;
         }
     }
 }

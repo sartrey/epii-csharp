@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using EPII.FEA;
+using System;
 using System.Windows.Forms;
 
 namespace EPII.UI.WinForms
@@ -20,9 +18,13 @@ namespace EPII.UI.WinForms
             throw new NotImplementedException();
         }
 
-        public void UpdateViewModel(bool render = true)
+        protected override void DisposeManaged()
         {
-            throw new NotImplementedException();
+            _ViewCore.Dispose();
+        }
+
+        protected override void DisposeNative()
+        {
         }
     }
 }

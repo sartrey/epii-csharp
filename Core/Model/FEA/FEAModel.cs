@@ -1,8 +1,7 @@
-﻿
-namespace EPII.UI
+﻿namespace EPII.FEA
 {
     [Model(LifeCycle = LifeCycles.Singleton)]
-    public class UIModel : IModel
+    public class FEAModel : IModel
     {
         private ViewHub _ViewHub = null;
         private WindowPool _WindowPool = null;
@@ -22,7 +21,7 @@ namespace EPII.UI
             get { throw new System.NotImplementedException(); }
         }
 
-        public UIModel()
+        public FEAModel()
         {
             _ViewHub = new ViewHub();
             _WindowPool = new WindowPool();

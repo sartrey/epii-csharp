@@ -11,16 +11,17 @@ namespace EPII.Test.WinForms
         static void Main()
         {
             var runtime = Runtime.Instance;
-            var ui = runtime.Use<UI.UIModel>();
+            var fea = runtime.Use<FEA.FEAModel>();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            var window = ui.WindowPool.GetWindow();
             var view = new TestView1();
-            ui.ViewHub.Add("test", view);
+            fea.ViewHub.Add("test", view);
+            
+            var window = fea.WindowPool.GetWindow();
             window.View = view;
-            window.Show();
+            window.Open();
 
             Application.Run();
         }
