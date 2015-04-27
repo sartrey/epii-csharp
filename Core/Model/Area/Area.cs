@@ -37,6 +37,9 @@ namespace EPII.Area
             UseShares(_Shares);
         }
 
+        /// <summary>
+        /// used to fill shares
+        /// </summary>
         protected abstract void UseShares(Table<object> shares);
 
         public Service GetService(string name)

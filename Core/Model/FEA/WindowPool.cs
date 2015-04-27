@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
-
-namespace EPII.FEA
+﻿namespace EPII.FEA
 {
+    using System.Collections.Generic;
+
     public class WindowPool
     {
         private object _SyncRoot = new object();
         private List<IWindow> _Windows
             = new List<IWindow>();
-        private int _MaxCache = 0;
+        private int _MaxCache = 16;
 
         public T One<T>()
             where T : class, IWindow, new()
@@ -18,13 +18,13 @@ namespace EPII.FEA
                 if (window is T)
                     return window as T;
             }
-            Clear();
+            TryRelease();
             var new_window = new T();
             _Windows.Add(new_window);
             return new_window;
         }
 
-        public void Clear() 
+        public void TryRelease() 
         {
             if(_Windows.Count > _MaxCache)
                 _Windows.RemoveAll(e => !e.HasView);

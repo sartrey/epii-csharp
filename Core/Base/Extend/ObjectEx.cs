@@ -2,9 +2,15 @@
 
 namespace EPII
 {
+    //todo: thread safe dispose ???
     public abstract class ObjectEx : IDisposable
     {
-        protected bool _Disposed = false;
+        private bool _Disposed = false;
+
+        public bool Disposed 
+        {
+            get { return _Disposed; }
+        }
 
         ~ObjectEx()
         {
@@ -17,12 +23,6 @@ namespace EPII
         protected abstract void DisposeManaged();
 
         protected abstract void DisposeNative();
-
-        protected void GuardDisposed() 
-        {
-            if (_Disposed)
-                throw new ObjectDisposedException("ObjectEx");
-        }
 
         public void Dispose()
         {

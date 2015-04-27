@@ -1,5 +1,4 @@
 ﻿using EPII.FEA;
-using System;
 using System.Windows.Forms;
 
 namespace EPII.UI.WinForms
@@ -7,25 +6,23 @@ namespace EPII.UI.WinForms
     public abstract class WindowEx : IWindow
     {
         private Form _WindowCore = null;
-        private ViewEx _View = null;
 
         public bool HasView
         {
-            get { return _View != null; }
+            get { return _WindowCore.Controls.Count > 0; }
         }
 
         public IView View
         {
-            get { return _View; }
+            get { return _WindowCore.Controls[0] as IView; }
             set
             {
-                if (_View != null)
+                if (HasView)
                     return;
-                var view = value as ViewEx;
+                var view = value as UserControl;
                 if (view == null)
                     return;
-                _WindowCore.Controls.Add(view.ViewCore);
-                _View = view;
+                _WindowCore.Controls.Add(view);
             }
         }
 
@@ -38,7 +35,6 @@ namespace EPII.UI.WinForms
         {
             _WindowCore.Hide();
             _WindowCore.Controls.Clear();
-            _View = null;
         }
     }
 }

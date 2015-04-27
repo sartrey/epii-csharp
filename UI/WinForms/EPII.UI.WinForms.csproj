@@ -65,7 +65,6 @@
     <Compile Include="View.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ViewEx.cs" />
     <Compile Include="Window.cs">
       <SubType>Form</SubType>
     </Compile>

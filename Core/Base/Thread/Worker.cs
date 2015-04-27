@@ -1,9 +1,8 @@
-﻿using System;
-using System.Diagnostics;
-using System.Threading;
-
-namespace EPII
+﻿namespace EPII
 {
+    using System;
+    using System.Threading;
+
     public class Worker
     {
         private Pipe<Action> _Jobs
@@ -26,7 +25,8 @@ namespace EPII
                 try {
                     job();
                 } catch (Exception ex) {
-                    Trace.TraceError(ex.Message);
+                    Diagnose.TraceError(
+                        "Worker", "Routine", ex.Message);
                 }
             }
         }

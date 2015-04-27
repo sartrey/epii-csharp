@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Test", ".Test", "{9C6CD282
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPII.UI.WPF", "UI\WPF\EPII.UI.WPF.csproj", "{8B2ECA0F-D5AF-400E-8861-706140BE95D4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPII.Test.WPF", "Test\EPII.Test.WPF\EPII.Test.WPF.csproj", "{60BF0B41-C6E9-4B67-B534-D5AE96B52D2D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{8B2ECA0F-D5AF-400E-8861-706140BE95D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B2ECA0F-D5AF-400E-8861-706140BE95D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B2ECA0F-D5AF-400E-8861-706140BE95D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60BF0B41-C6E9-4B67-B534-D5AE96B52D2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60BF0B41-C6E9-4B67-B534-D5AE96B52D2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60BF0B41-C6E9-4B67-B534-D5AE96B52D2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60BF0B41-C6E9-4B67-B534-D5AE96B52D2D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,5 +54,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{5218B00B-8916-4E7E-A500-2A78999D20C6} = {9C6CD282-BFA1-4369-9EBA-5CC6129015DF}
 		{B3DFD45F-31DB-4B5D-9CE5-ACB8AD5352BE} = {9C6CD282-BFA1-4369-9EBA-5CC6129015DF}
+		{60BF0B41-C6E9-4B67-B534-D5AE96B52D2D} = {9C6CD282-BFA1-4369-9EBA-5CC6129015DF}
 	EndGlobalSection
 EndGlobal
