@@ -1,40 +1,74 @@
-﻿using EPII.FEA;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace EPII.UI.WinForms
 {
-    public abstract class WindowEx : IWindow
+    public class WindowEx : Form
     {
-        private Form _WindowCore = null;
+        protected bool _IsSizeLocked = true;
+        protected Size _LockSize;
 
-        public bool HasView
+        public bool IsSizeLocked
         {
-            get { return _WindowCore.Controls.Count > 0; }
+            get { return _IsSizeLocked; }
+            set { _IsSizeLocked = value; }
         }
 
-        public IView View
+        public WindowEx(View view)
         {
-            get { return _WindowCore.Controls[0] as IView; }
-            set
-            {
-                if (HasView)
-                    return;
-                var view = value as UserControl;
-                if (view == null)
-                    return;
-                _WindowCore.Controls.Add(view);
+            SetView(view);
+            StartPosition = FormStartPosition.CenterScreen;
+        }
+
+        protected void CopyStyle(View view) 
+        {
+            Text = view.Text;
+        }
+
+        protected override void OnResizeEnd(EventArgs e)
+        {
+            if (_IsSizeLocked)
+                ClientSize = _LockSize;
+            base.OnResizeEnd(e);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) {
+                var view = GetView();
+                if (view != null)
+                    view.Dispose();
             }
+            base.Dispose(disposing);
         }
 
-        public void Open()
+        public View GetView() 
         {
-            _WindowCore.Show();
+            return Controls.Count > 0 ? Controls[0] as View : null;
         }
 
-        public void Close()
+        public void SetView(View view) 
         {
-            _WindowCore.Hide();
-            _WindowCore.Controls.Clear();
+            var old_view = GetView();
+            if (old_view == view)
+                return;
+            if (old_view != null) {
+                Controls.Clear();
+                old_view.Dispose();
+            }
+            if (view != null) {
+                _LockSize = ClientSize = view.Size;
+                view.Dock = DockStyle.Fill;
+                Controls.Add(view);
+            }
+            CopyStyle(view);
+        }
+
+        public void FinishDialog(DialogResult result)
+        {
+            this.DialogResult = result;
+            this.Close();
         }
     }
 }

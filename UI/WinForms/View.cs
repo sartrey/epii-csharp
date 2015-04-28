@@ -71,7 +71,7 @@ namespace EPII.UI.WinForms
 
         protected override void OnParentChanged(EventArgs e)
         {
-            var window = Parent as Window;
+            var window = Parent as WindowEx;
             if (window != null) {
                 var handler_shown = new EventHandler(
                     (a, b) => { OnParentShown(); });
@@ -98,7 +98,7 @@ namespace EPII.UI.WinForms
         protected override void Dispose(bool disposing)
         {
             if (disposing) {
-                var window = Parent as Window;
+                var window = Parent as WindowEx;
                 var handler_shown = _Handlers["shown"] as EventHandler;
                 var handler_closing = _Handlers["closing"] as FormClosingEventHandler;
                 if (handler_shown != null)
@@ -114,7 +114,7 @@ namespace EPII.UI.WinForms
 
         protected void FinishDialog(DialogResult result)
         {
-            var window = Parent as Window;
+            var window = Parent as WindowEx;
             window.FinishDialog(result);
         }
     }

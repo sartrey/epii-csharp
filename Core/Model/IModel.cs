@@ -2,8 +2,10 @@
 {
     public interface IModel
     {
-        bool Identify();
-
         IModelSettings Settings { get; }
     }
+
+    public interface ISingletonModel : IModel { }
+
+    public interface ITransientModel : IModel { }
 }

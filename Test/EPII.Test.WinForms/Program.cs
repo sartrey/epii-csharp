@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using EPII.UI.WinForms;
+using System;
 using System.Windows.Forms;
 
 namespace EPII.Test.WinForms
@@ -12,14 +11,16 @@ namespace EPII.Test.WinForms
         {
             var runtime = Runtime.Instance;
             var fea = runtime.Use<FEA.FEAModel>();
+            var director = fea.GetDirector<UI.WinForms.Director>();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            var view = new TestView1();
-            fea.ViewHub.Add("test", view);
-            
-            var window = fea.WindowPool.GetWindow();
+            var view = new PersonView();
+            var viewmodel = new PersonViewModel();
+            view.Bind(viewmodel);
+
+            var window = fea.WindowPool.One<Window>();
             window.View = view;
             window.Open();
 

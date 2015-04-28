@@ -1,7 +1,6 @@
 ﻿namespace EPII.Area
 {
-    [Model(LifeCycle = LifeCycles.Singleton)]
-    public class AreaModel : IModel
+    public class AreaModel : ISingletonModel
     {
         private AreaHub _AreaHub = null;
         
@@ -18,11 +17,6 @@
         public AreaModel()
         {
             _AreaHub = new AreaHub();
-        }
-
-        public bool Identify()
-        {
-            return false;
         }
     }
 }

@@ -1,74 +1,54 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-
-namespace EPII.UI.WinForms
+﻿namespace EPII.UI.WinForms
 {
-    public class Window : Form
+    using EPII.FEA;
+    using System.Windows.Forms;
+
+    public class Window : IWindow
     {
-        protected bool _IsSizeLocked = true;
-        protected Size _LockSize;
+        private Form _WindowCore = null;
 
-        public bool IsSizeLocked
+        public bool HasView
         {
-            get { return _IsSizeLocked; }
-            set { _IsSizeLocked = value; }
+            get { return _WindowCore.Controls.Count > 0; }
         }
 
-        public Window(View view)
+        public IView View
         {
-            SetView(view);
-            StartPosition = FormStartPosition.CenterScreen;
-        }
-
-        protected void CopyStyle(View view) 
-        {
-            Text = view.Text;
-        }
-
-        protected override void OnResizeEnd(EventArgs e)
-        {
-            if (_IsSizeLocked)
-                ClientSize = _LockSize;
-            base.OnResizeEnd(e);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing) {
-                var view = GetView();
-                if (view != null)
-                    view.Dispose();
+            get { return _WindowCore.Controls[0] as IView; }
+            set
+            {
+                if (HasView)
+                    return;
+                var view = value as UserControl;
+                if (view == null)
+                    return;
+                _WindowCore.Controls.Add(view);
+                AdaptView();
             }
-            base.Dispose(disposing);
         }
 
-        public View GetView() 
+        public Window() 
         {
-            return Controls.Count > 0 ? Controls[0] as View : null;
+            _WindowCore = new Form();
         }
 
-        public void SetView(View view) 
+        private void AdaptView()
         {
-            var old_view = GetView();
-            if (old_view == view)
-                return;
-            if (old_view != null) {
-                Controls.Clear();
-                old_view.Dispose();
-            }
-            if (view != null) {
-                _LockSize = ClientSize = view.Size;
-                view.Dock = DockStyle.Fill;
-                Controls.Add(view);
-            }
-            CopyStyle(view);
+            var content = View as UserControl;
+            _WindowCore.ClientSize = content.Size;
+            _WindowCore.StartPosition = FormStartPosition.CenterScreen;
+            _WindowCore.SizeGripStyle = SizeGripStyle.Hide;
         }
 
-        public void FinishDialog(DialogResult result)
+        public void Open()
         {
-            this.DialogResult = result;
-            this.Close();
+            _WindowCore.Show();
+        }
+
+        public void Close()
+        {
+            _WindowCore.Hide();
+            _WindowCore.Controls.Clear();
         }
     }
 }

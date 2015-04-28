@@ -2,8 +2,8 @@
 {
     public interface IDirector
     {
-        void Activate(IViewModel viewmodel);
+        IView Activate(IViewModel viewmodel);
 
-        void Activate(IViewModel viewmodel, IView view);
+        IView Activate(IViewModel viewmodel, IView view);
     }
 }

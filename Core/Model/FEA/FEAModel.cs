@@ -1,9 +1,12 @@
 ﻿namespace EPII.FEA
 {
-    [Model(LifeCycle = LifeCycles.Singleton)]
-    public class FEAModel : IModel
+    using System.Collections.Generic;
+
+    public class FEAModel : ISingletonModel
     {
         private WindowPool _WindowPool = null;
+        private List<IDirector> _Directors 
+            = new List<IDirector>();
         
         public WindowPool WindowPool 
         {
@@ -20,9 +23,17 @@
             _WindowPool = new WindowPool();
         }
 
-        public bool Identify()
+        public IDirector GetDirector<T>()
+            where T : IDirector, new()
         {
-            return false;
+            var type = typeof(T);
+            foreach (var director in _Directors) {
+                if (type.IsInstanceOfType(director))
+                    return director;
+            }
+            var new_director = new T();
+            _Directors.Add(new_director);
+            return new_director;
         }
     }
 }

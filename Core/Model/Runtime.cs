@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-
-namespace EPII
+﻿namespace EPII
 {
+    using System;
+    using System.Collections.Generic;
+
     public class Runtime : ObjectEx
     {
         private static object _CtorMutex = null;
@@ -32,8 +31,8 @@ namespace EPII
         }
 
         private object _SyncRoot = new object();
-        private List<IModel> _Models
-            = new List<IModel>();
+        private List<ISingletonModel> _SingletonModels
+            = new List<ISingletonModel>();
         private Table<object> _Data
             = new Table<object>();
 
@@ -47,31 +46,27 @@ namespace EPII
         }
 
         public T Use<T>()
-            where T : IModel
+            where T : IModel, new()
         {
-            var type = typeof(T) as MemberInfo;
-            var attrib = Attribute.GetCustomAttribute(
-                type, typeof(ModelAttribute)) as ModelAttribute;
-            if (attrib == null)
-                throw new Exception("model attribute not found");
-            if (attrib.LifeCycle == LifeCycles.Transient) {
+            var type = typeof(T);
+            var is_transient = type.GetInterface("ITransientModel") != null;
+            //var is_singleton = type.GetInterface("ISingletonModel") != null;
+            if (is_transient) {
                 var t = (T)Activator.CreateInstance(typeof(T));
                 return t;
             } else {
                 lock (_SyncRoot) {
-                    var t = attrib.LifeCycle == LifeCycles.Instance ? 
-                        _Models.Find(e => e.Identify()) : 
-                        _Models.Find(e => e.GetType() == typeof(T));
+                    var t = _SingletonModels.Find(e => e.GetType() == typeof(T));
                     if(t == null)
-                        t = (IModel)Activator.CreateInstance(typeof(T));
-                    _Models.Add(t);
+                        t = (ISingletonModel)(new T());
+                    _SingletonModels.Add(t);
                     return (T)t;
                 }
             }
         }
 
         public T Use<T>(Action<IModelSettings> setup)
-            where T : IModel
+            where T : IModel, new()
         {
             var instance = Use<T>();
             if (instance != null) {
@@ -88,6 +83,12 @@ namespace EPII
                     item.Dispose();
             }
             _Data.Clear();
+            foreach (var model in _SingletonModels) {
+                var item = model as IDisposable;
+                if (item != null)
+                    item.Dispose();
+            }
+            _SingletonModels.Clear();
         }
 
         protected override void DisposeNative()

@@ -1,15 +1,11 @@
 ﻿namespace EPII.FEA
 {
-    using System;
-
     public interface IViewModel
     {
-        event Action<string> PropertyChanged;
+        //void DelayPropertyChanged(string name);
 
-        void RelayPropertyChanged(string name);
+        //void UndoPropertyChanged(string name);
 
         void RaisePropertyChanged(string name);
-
-        void Undo(string name);
     }
 }

@@ -53,7 +53,6 @@
     <Compile Include="Model\Area\Area.cs" />
     <Compile Include="Model\Area\AreaContext.cs" />
     <Compile Include="Model\Area\AreaHub.cs" />
-    <Compile Include="Model\ModelAttribute.cs" />
     <Compile Include="Model\FEA\IViewHost.cs" />
     <Compile Include="Model\FEA\IView.cs" />
     <Compile Include="Model\FEA\IViewModel.cs" />
