@@ -65,12 +65,15 @@
             }
         }
 
-        public T Use<T>(Action<IModelSettings> setup)
+        public T Use<T>(Func<T, bool> setup)
             where T : IModel, new()
         {
             var instance = Use<T>();
             if (instance != null) {
-                setup(instance.Settings);
+                if (!setup(instance)) {
+                    Diagnose.TraceError(
+                        "Runtime", "Use", "setup error");
+                }
             }
             return instance;
         }

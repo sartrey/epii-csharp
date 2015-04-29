@@ -1,28 +1,15 @@
 ﻿namespace EPII.UI.WinForms
 {
-    using EPII.FEA;
     using System;
-    using System.ComponentModel;
-    using System.Diagnostics;
 
-    public class ViewModel : IViewModel, INotifyPropertyChanged
+    public class ViewModel : EPII.Front.ViewModel 
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+        private event EventHandler PropertyChanged;
 
-        [Conditional("DEBUG")]
-        public void ValidProperty(string name)
+        protected override void OnPropertyChanged<T>(string name, T value)
         {
-            var type = this.GetType();
-            var prop = type.GetProperty(name);
-            if (prop == null)
-                throw new MissingMemberException();
-        }
-
-        public void RaisePropertyChanged(string name)
-        {
-            ValidProperty(name);
             if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(name));
+                PropertyChanged(this, new EventArgs());
         }
     }
 }

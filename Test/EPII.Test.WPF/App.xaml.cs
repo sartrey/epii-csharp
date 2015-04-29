@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using EPII.UI.WPF;
 
 namespace EPII.Test.WPF
 {
@@ -7,21 +6,24 @@ namespace EPII.Test.WPF
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            var runtime = Runtime.Instance;
-            var fea = runtime.Use<FEA.FEAModel>();
-            var director = fea.GetDirector<UI.WPF.Director>();
-
-            //director.Activate(new PersonViewModel());
-            //var view = director.Activate(new PersonViewModel(), new PersonView());
-            var viewmodel = new PersonViewModel();
-            var view = new PersonView();
-            view.Bind(viewmodel);
-
-            var window = fea.WindowPool.One<EPII.UI.WPF.Window>();
-            window.View = view;
-            window.Open();
-
             base.OnStartup(e);
+
+            var runtime = Runtime.Instance;
+            var front = runtime.Use<Front.Startup>(
+                startup => {
+                    startup.SearchAllViews();
+                    return true;
+                });
+            
+            var view = front.Director.Activate(new PersonViewModel());
+            if (view != null) {
+                var window = front.WindowPool.One<EPII.UI.WPF.Window>();
+                window.View = view;
+                window.Open();
+            } else {
+                MessageBox.Show("null view");
+                App.Current.Shutdown();
+            }
         }
     }
 }

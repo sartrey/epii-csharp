@@ -1,4 +1,4 @@
-﻿namespace EPII.FEA
+﻿namespace EPII.Front
 {
     using System.Collections.Generic;
 
@@ -15,8 +15,9 @@
             foreach (var window in _Windows) {
                 if (window.HasView)
                     continue;
-                if (window is T)
-                    return window as T;
+                var target = window as T;
+                if (target != null)
+                    return target;
             }
             TryRelease();
             var new_window = new T();

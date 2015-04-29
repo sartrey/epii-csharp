@@ -1,6 +1,6 @@
 ﻿namespace EPII.Area
 {
-    public class AreaModel : ISingletonModel
+    public class Startup : ISingletonModel
     {
         private AreaHub _AreaHub = null;
         
@@ -9,12 +9,7 @@
             get { return _AreaHub; }
         }
 
-        public IModelSettings Settings
-        {
-            get { throw new System.NotImplementedException(); }
-        }
-
-        public AreaModel()
+        public Startup()
         {
             _AreaHub = new AreaHub();
         }

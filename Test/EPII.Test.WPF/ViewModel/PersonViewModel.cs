@@ -1,4 +1,5 @@
-﻿using EPII.Test.Data;
+﻿using EPII.Data;
+using EPII.Test.Data;
 using EPII.UI.WPF;
 using System;
 
@@ -21,42 +22,31 @@ namespace EPII.Test.WPF
             get { return _Person; }
             set 
             {
+                new Guard<Person>(value).NotNull();
                 _Person = value;
-                RaisePropertyChanged("Name");
-                //RaisePropertyChanged("Birth");
-                RaisePropertyChanged("BirthText");
+                Notice(() => Person);
+                Notice(() => Name);
+                Notice(() => BirthText);
             }
         }
 
         public string Name
         {
-            get 
-            {
-                //return _Name;
-                return _Person != null ? _Person.Name : null; 
-            }
+            get { return _Person != null ? _Person.Name : null; }
             set 
             {
-                //_Name = value;
-                _Person.Name = value; 
-                //do something
-                RaisePropertyChanged("Name");
+                _Person.Name = value;
+                Notice(() => Name);
             }
         }
 
         public DateTime Birth
         {
-            get 
-            {
-                //return _Birth;
-                return _Person != null ? _Person.Birth : DateTime.Now;
-            }
+            get { return _Person != null ? _Person.Birth : DateTime.Now; }
             set 
             {
-                //_Birth = value;
                 _Person.Birth = value;
-                //do something
-                //RaisePropertyChanged("Birth");
+                //Notice(() => Birth);
             }
         }
 
@@ -68,7 +58,7 @@ namespace EPII.Test.WPF
                 DateTime temp = DateTime.Now;
                 if (DateTime.TryParse(value, out temp)) {
                     Birth = temp;
-                    RaisePropertyChanged("BirthText");
+                    Notice(() => BirthText);
                 }
             }
         }
@@ -77,19 +67,16 @@ namespace EPII.Test.WPF
         {
         }
 
-        public void GetNextPerson() 
+        public void GetNextPerson()
         {
-            if (Person == null)
-                Person = _Source.Persons[0];
-            else {
-                var index = _Source.Persons.FindIndex(
-                    e => e.Name == Person.Name);
-                if (index == _Source.Persons.Count - 1)
-                    index = 0;
-                else
-                    index++;
-                Person = _Source.Persons[index];
-            }
+            var index = Person == null ? 0 :
+                    _Source.Persons.FindIndex(
+                        e => e.Name == Person.Name);
+            if (index == _Source.Persons.Count - 1)
+                index = 0;
+            else
+                index++;
+            Person = _Source.Persons[index];
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace EPII.FEA
+﻿namespace EPII.Front
 {
     public interface IWindow : IViewHost
     {

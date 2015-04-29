@@ -1,5 +1,4 @@
-﻿using EPII.UI.WinForms;
-using System;
+﻿using System;
 using System.Windows.Forms;
 
 namespace EPII.Test.WinForms
@@ -9,22 +8,25 @@ namespace EPII.Test.WinForms
         [STAThread]
         static void Main()
         {
-            var runtime = Runtime.Instance;
-            var fea = runtime.Use<FEA.FEAModel>();
-            var director = fea.GetDirector<UI.WinForms.Director>();
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            var view = new PersonView();
-            var viewmodel = new PersonViewModel();
-            view.Bind(viewmodel);
+            var runtime = Runtime.Instance;
+            var front = runtime.Use<Front.Startup>(
+                startup => {
+                    startup.SearchAllViews();
+                    return true;
+                });
 
-            var window = fea.WindowPool.One<Window>();
-            window.View = view;
-            window.Open();
-
-            Application.Run();
+            var view = front.Director.Activate(new PersonViewModel());
+            if (view != null) {
+                var window = front.WindowPool.One<EPII.UI.WinForms.Window>();
+                window.View = view;
+                window.Open();
+                Application.Run();
+            } else {
+                MessageBox.Show("null view");
+            }
         }
     }
 }

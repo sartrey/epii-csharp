@@ -22,41 +22,29 @@ namespace EPII.Test.WinForms
             set
             {
                 _Person = value;
-                RaisePropertyChanged("Name");
-                //RaisePropertyChanged("Birth");
-                RaisePropertyChanged("BirthText");
+                Notice(() => Name);
+                Notice(() => BirthText);
+                //Notice(() => Birth);
             }
         }
 
         public string Name
         {
-            get
-            {
-                //return _Name;
-                return _Person != null ? _Person.Name : null;
-            }
+            get { return _Person != null ? _Person.Name : null; }
             set
             {
-                //_Name = value;
                 _Person.Name = value;
-                //do something
-                RaisePropertyChanged("Name");
+                Notice(() => Name);
             }
         }
 
         public DateTime Birth
         {
-            get
-            {
-                //return _Birth;
-                return _Person != null ? _Person.Birth : DateTime.Now;
-            }
+            get { return _Person != null ? _Person.Birth : DateTime.Now; }
             set
             {
-                //_Birth = value;
                 _Person.Birth = value;
-                //do something
-                //RaisePropertyChanged("Birth");
+                //Notice(() = > Birth);
             }
         }
 
@@ -68,7 +56,7 @@ namespace EPII.Test.WinForms
                 DateTime temp = DateTime.Now;
                 if (DateTime.TryParse(value, out temp)) {
                     Birth = temp;
-                    RaisePropertyChanged("BirthText");
+                    Notice(() => BirthText);
                 }
             }
         }

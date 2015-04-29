@@ -1,6 +1,6 @@
 ﻿namespace EPII.UI.WinForms
 {
-    using EPII.FEA;
+    using EPII.Front;
     using System.Windows.Forms;
 
     public class Window : IWindow

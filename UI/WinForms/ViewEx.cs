@@ -5,7 +5,7 @@ using System.Windows.Forms;
 namespace EPII.UI.WinForms
 {
     [ToolboxItem(false)]
-    public class View : UserControl
+    public class ViewEx : UserControl
     {
         protected static object _Mutex = null;
 
@@ -31,7 +31,7 @@ namespace EPII.UI.WinForms
             get { return false; }
         }
 
-        public View()
+        public ViewEx()
         {
             if (IsMutexView) {
                 if (_Mutex != null)
@@ -41,7 +41,7 @@ namespace EPII.UI.WinForms
             }
         }
 
-        public View(object model)
+        public ViewEx(object model)
             : this()
         {
             _Model = model;

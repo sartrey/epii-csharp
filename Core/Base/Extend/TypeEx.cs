@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-
-namespace EPII
+﻿namespace EPII
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Reflection;
+
     public class TypeEx
     {
         private Type _Type;
 
         /// <summary>
-        /// get root type
+        /// get core type
         /// </summary>
         public Type Type
         {
@@ -30,7 +30,7 @@ namespace EPII
         }
 
         /// <summary>
-        /// test if root implemented target
+        /// test if type implemented target
         /// </summary>
         public bool HasInterface(Type target)
         {
@@ -39,7 +39,7 @@ namespace EPII
         }
 
         /// <summary>
-        /// test if root is derived from target
+        /// test if type inherited from target
         /// </summary>
         public bool HasBaseType(Type target)
         {
@@ -50,7 +50,7 @@ namespace EPII
         }
 
         /// <summary>
-        /// get types derived from root
+        /// get types derived from type in assembly
         /// </summary>
         public IEnumerable<Type> GetDerivedTypes(Assembly assembly)
         {

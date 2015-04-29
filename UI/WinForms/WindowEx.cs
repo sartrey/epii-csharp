@@ -15,13 +15,13 @@ namespace EPII.UI.WinForms
             set { _IsSizeLocked = value; }
         }
 
-        public WindowEx(View view)
+        public WindowEx(ViewEx view)
         {
             SetView(view);
             StartPosition = FormStartPosition.CenterScreen;
         }
 
-        protected void CopyStyle(View view) 
+        protected void CopyStyle(ViewEx view) 
         {
             Text = view.Text;
         }
@@ -43,12 +43,12 @@ namespace EPII.UI.WinForms
             base.Dispose(disposing);
         }
 
-        public View GetView() 
+        public ViewEx GetView() 
         {
-            return Controls.Count > 0 ? Controls[0] as View : null;
+            return Controls.Count > 0 ? Controls[0] as ViewEx : null;
         }
 
-        public void SetView(View view) 
+        public void SetView(ViewEx view) 
         {
             var old_view = GetView();
             if (old_view == view)

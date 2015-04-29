@@ -1,0 +1,13 @@
+﻿namespace: EPII.Front
+FEA(Front End Abstract) part of EPII.Front
+
+FEA only provides the basic design for FE
+
+FEA uses MVVM as FE design pattern
+IView has a property change raise method instead of event
+
+FEA makes a difference between window and view (IWindow and IView)
+IView should be hosted in a IViewHost
+IWindow inherits from IViewHost
+
+Front Model realizes FEA
