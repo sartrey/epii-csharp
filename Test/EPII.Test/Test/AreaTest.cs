@@ -22,7 +22,7 @@ namespace EPII.Test
         public void SetupData()
         {
             var runtime = Runtime.Instance;
-            var areas = runtime.Use<AreaModel>().AreaHub;
+            var areas = runtime.Use<Area.Startup>().AreaHub;
             var area = areas["Identity"];
             var context = AreaContext.GetCurrentContext(area);
             var data = context.GetDataAccess("EntityFramework");
@@ -33,7 +33,7 @@ namespace EPII.Test
         public void GetHandler()
         {
             var runtime = Runtime.Instance;
-            var areas = runtime.Use<AreaModel>().AreaHub;
+            var areas = runtime.Use<Area.Startup>().AreaHub;
             var area = areas["Identity"];
             var user_service = area.GetService("User");
             //var user_service = area.GetService<IUserService>();

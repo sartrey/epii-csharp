@@ -38,6 +38,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\Extend\EventEx.cs" />
     <Compile Include="Base\Utility\Cache.cs" />
     <Compile Include="Base\Diagnose.cs" />
     <Compile Include="Base\Thread\Loop.cs" />
@@ -63,7 +64,7 @@
     <Compile Include="Base\Collection\Table.cs" />
     <Compile Include="Base\Thread\Worker.cs" />
     <Compile Include="Base\Code\AES.cs" />
-    <Compile Include="Base\Utility\Bytes.cs" />
+    <Compile Include="Base\Extend\BytesEx.cs" />
     <Compile Include="Base\Code\Hash.cs" />
     <Compile Include="Base\Code\RCC.cs" />
     <Compile Include="Base\Code\LUC.cs" />

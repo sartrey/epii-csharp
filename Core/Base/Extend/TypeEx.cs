@@ -4,46 +4,31 @@
     using System.Collections.Generic;
     using System.Reflection;
 
-    public class TypeEx
+    public static class TypeEx
     {
-        private Type _Type;
-
-        /// <summary>
-        /// get core type
-        /// </summary>
-        public Type Type
-        {
-            get { return _Type; }
-        }
-
         /// <summary>
         /// get path for assembly with type
         /// </summary>
-        public string Path
+        public static string GetAssemblyPath(this Type type)
         {
-            get { return _Type.Assembly.Location; }
-        }
-
-        public TypeEx(Type type)
-        {
-            _Type = type;
+            return type.Assembly.Location;
         }
 
         /// <summary>
         /// test if type implemented target
         /// </summary>
-        public bool HasInterface(Type target)
+        public static bool HasInterface(this Type type, Type target)
         {
-            var temp = _Type.GetInterface(target.Name);
+            var temp = type.GetInterface(target.Name);
             return temp == target;
         }
 
         /// <summary>
         /// test if type inherited from target
         /// </summary>
-        public bool HasBaseType(Type target)
+        public static bool HasBaseType(this Type type, Type target)
         {
-            var temp = _Type;
+            var temp = type;
             while (temp != null && temp != target)
                 temp = temp.BaseType;
             return temp != null;
@@ -52,15 +37,20 @@
         /// <summary>
         /// get types derived from type in assembly
         /// </summary>
-        public IEnumerable<Type> GetDerivedTypes(Assembly assembly)
+        public static IEnumerable<Type> GetDerivedTypes(
+            this Type type, Assembly assembly)
         {
             var types = assembly.GetTypes();
-            foreach (var type in types) {
-                var typex = new TypeEx(type);
-                if (typex.HasInterface(_Type))
-                    yield return type;
-                if (typex.HasBaseType(_Type))
-                    yield return type;
+            if (type.IsInterface) {
+                foreach (var t in types) {
+                    if (t.HasInterface(type))
+                        yield return t;
+                }
+            } else {
+                foreach (var t in types) {
+                    if (t.HasBaseType(type))
+                        yield return t;
+                }
             }
         }
     }

@@ -18,8 +18,7 @@
         {
             var target = typeof(IView<T>);
             foreach (var type in _ViewTypes) {
-                var typex = new TypeEx(type);
-                if (typex.HasInterface(target))
+                if (type.HasInterface(target))
                     return (IView<T>)Activator.CreateInstance(type);
             }
             return null;
@@ -28,8 +27,8 @@
         internal void SearchViews(Assembly assembly)
         {
             var type = typeof(IView);
-            var typex = new TypeEx(type);
-            _ViewTypes.AddRange(typex.GetDerivedTypes(assembly));
+            var types = type.GetDerivedTypes(assembly);
+            _ViewTypes.AddRange(types);
         }
 
         public IView<T> Activate<T>(T viewmodel)

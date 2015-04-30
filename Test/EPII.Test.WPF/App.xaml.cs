@@ -11,7 +11,7 @@ namespace EPII.Test.WPF
             var runtime = Runtime.Instance;
             var front = runtime.Use<Front.Startup>(
                 startup => {
-                    startup.SearchAllViews();
+                    startup.SearchViews(typeof(App).Assembly);
                     return true;
                 });
             
