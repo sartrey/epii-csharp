@@ -11,6 +11,11 @@ namespace EPII.Test.WinForms
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            var form1 = new FrmControls();
+            form1.Show();
+            Application.Run();
+
+            /*
             var runtime = Runtime.Instance;
             var front = runtime.Use<Front.Startup>(
                 startup => {
@@ -27,6 +32,7 @@ namespace EPII.Test.WinForms
             } else {
                 MessageBox.Show("null view");
             }
+            */
         }
     }
 }

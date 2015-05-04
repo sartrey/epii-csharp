@@ -61,8 +61,8 @@ namespace EPII.UI.WinForms
             {
                 var column = _Data.Columns[i];
                 var input = new TextField();
-                input.Text = column.ColumnName;
-                input.Note = "";
+                input.HeaderText = column.ColumnName;
+                input.NoteText = "";
                 input.Padding = new Padding(2);
                 if (row != null)
                 {

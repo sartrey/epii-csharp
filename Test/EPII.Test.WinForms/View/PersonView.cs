@@ -16,7 +16,10 @@ namespace EPII.Test.WinForms
         public void Bind(PersonViewModel viewmodel)
         {
             //todo: bind data with vm
-            //todo: bind behavior with vm
+            BtnNext.Click += new EventHandler(
+                (sender, e) => { viewmodel.GetNextPerson(); });
+            this.Load += new EventHandler(
+                (sender, e) => { viewmodel.GetNextPerson(); });
             _ViewModel = viewmodel;
         }
     }

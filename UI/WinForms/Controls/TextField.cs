@@ -4,21 +4,21 @@ using System.Windows.Forms;
 
 namespace EPII.UI.WinForms
 {
-    public class TextField : FieldControl
+    public class TextField : FieldPanel
     {
         private string _OldText = null;
         private bool _AutoSelect = true;
 
         public string InputText 
         {
-            get { return (GetContent() as TextBox).Text; }
-            set { (GetContent() as TextBox).Text = value; }
+            get { return (Content as TextBox).Text; }
+            set { (Content as TextBox).Text = value; }
         }
 
         public char PasswordText
         {
-            get { return (GetContent() as TextBox).PasswordChar; }
-            set { (GetContent() as TextBox).PasswordChar = value; }
+            get { return (Content as TextBox).PasswordChar; }
+            set { (Content as TextBox).PasswordChar = value; }
         }
 
         public string OldText 
@@ -33,36 +33,24 @@ namespace EPII.UI.WinForms
             set { _AutoSelect = value; }
         }
 
-        public bool AcceptsReturn 
-        {
-            get { return (GetContent() as TextBox).AcceptsReturn; }
-            set { (GetContent() as TextBox).AcceptsReturn = value; }
-        }
-
-        public bool WordWrap 
-        {
-            get { return (GetContent() as TextBox).WordWrap; }
-            set { (GetContent() as TextBox).WordWrap = value; }
-        }
-
         [Browsable(false)]
         public bool HasChanged 
         {
-            get { return (GetContent() as TextBox).Text != _OldText; }
+            get { return (Content as TextBox).Text != _OldText; }
         }
 
         public TextField()
         {
             var textbox = new TextBox();
             textbox.Multiline = true;
-            SetContent(textbox);
+            Content = textbox;
         }
 
         private void TbxInput_MouseHover(object sender, EventArgs e)
         {
             if (_AutoSelect) 
             {
-                var textbox = GetContent() as TextBox;
+                var textbox = Content as TextBox;
                 textbox.Focus();
                 textbox.SelectAll();
             }
@@ -70,7 +58,7 @@ namespace EPII.UI.WinForms
 
         private void TbxInput_DoubleClick(object sender, EventArgs e)
         {
-            (GetContent() as TextBox).Text = _OldText;
+            (Content as TextBox).Text = _OldText;
         }
     }
 }

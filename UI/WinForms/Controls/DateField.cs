@@ -1,26 +1,26 @@
-﻿using System;
-using System.Windows.Forms;
-
-namespace EPII.UI.WinForms
+﻿namespace EPII.UI.WinForms
 {
-    public partial class DateField : FieldControl
+    using System;
+    using System.Windows.Forms;
+
+    public partial class DateField : FieldPanel
     {
         public event EventHandler ValueChanged
         {
-            add { (GetContent() as DateTimePicker).ValueChanged += value; }
-            remove { (GetContent() as DateTimePicker).ValueChanged -= value; }
+            add { (Content as DateTimePicker).ValueChanged += value; }
+            remove { (Content as DateTimePicker).ValueChanged -= value; }
         }
 
         public DateTime SelectedDate
         {
-            get { return (GetContent() as DateTimePicker).Value; }
-            set { (GetContent() as DateTimePicker).Value = value; }
+            get { return (Content as DateTimePicker).Value; }
+            set { (Content as DateTimePicker).Value = value; }
         }
 
         public DateField()
         {
             var picker = new DateTimePicker();
-            SetContent(picker);
+            Content = picker;
         }
     }
 }

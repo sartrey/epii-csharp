@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace EPII.UI.WinForms
 {
-    public partial class SelectField : FieldControl
+    public partial class SelectField : FieldPanel
     {
         public class OptionItem 
         {
@@ -32,10 +32,9 @@ namespace EPII.UI.WinForms
             = new List<OptionItem>();
 
         [Browsable(false)]
-        public bool HasSelected 
+        public bool HasSelected
         {
-            get { return 
-                (GetContent() as ComboBox).SelectedIndex >= 0; }
+            get { return (Content as ComboBox).SelectedIndex >= 0; }
         }
 
         [Browsable(false)]
@@ -43,7 +42,7 @@ namespace EPII.UI.WinForms
         {
             get 
             {
-                var index = (GetContent() as ComboBox).SelectedIndex;
+                var index = (Content as ComboBox).SelectedIndex;
                 if (index < 0)
                     return null;
                 var item = _Options[index];
@@ -53,7 +52,7 @@ namespace EPII.UI.WinForms
             {
                 var index = _Options.FindIndex(
                     (e) => { return (int)(e.Value) == (int)value; });
-                (GetContent() as ComboBox).SelectedIndex = index;
+                (Content as ComboBox).SelectedIndex = index;
             }
         }
 
@@ -61,14 +60,14 @@ namespace EPII.UI.WinForms
         {
             var combobox = new ComboBox();
             combobox.DropDownStyle = ComboBoxStyle.DropDownList;
-            SetContent(combobox);
+            Content = combobox;
         }
 
         public void AddOption(string text, object value) 
         {
             var option = new OptionItem(text, value);
             _Options.Add(option);
-            (GetContent() as ComboBox).Items.Add(text);
+            (Content as ComboBox).Items.Add(text);
         }
     }
 }
