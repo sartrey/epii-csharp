@@ -28,40 +28,23 @@ namespace EPII.UI.WinForms
         {
             get
             {
-                var brush = VEs["text_brush"];
-                if (brush == null ||
-                    (brush as SolidBrush).Color != ForeColor) {
+                var brush = VEs["text_brush"] as SolidBrush;
+                if (brush == null || brush.Color != ForeColor) {
                     brush = new SolidBrush(ForeColor);
                     VEs["text_brush"] = brush;
                 }
-                return (Brush)brush;
+                return brush;
             }
         }
 
         private Brush MouseMoveBrush 
         {
-            get 
-            {
-                var brush = VEs["move_brush"];
-                if (brush == null) {
-                    brush = new SolidBrush(Color.Orange);
-                    VEs["move_brush"] = brush;
-                }
-                return (Brush)brush;
-            }
+            get { return VEs["move_brush"] as SolidBrush; }
         }
 
         private Brush MouseLeaveBrush
         {
-            get
-            {
-                var brush = VEs["leave_brush"];
-                if (brush == null) {
-                    brush = new SolidBrush(Color.LightBlue);
-                    VEs["leave_brush"] = brush;
-                }
-                return (Brush)brush;
-            }
+            get { return VEs["leave_brush"] as SolidBrush; }
         }
 
         [Category("Browse")]
@@ -128,12 +111,21 @@ namespace EPII.UI.WinForms
             Size = new Size(240, 30);
         }
 
+        protected override void BuildVEs(Table<object> ves)
+        {
+            base.BuildVEs(ves);
+            ves["move_brush"] = new SolidBrush(Color.Orange);
+            ves["leave_brush"] = new SolidBrush(Color.LightBlue);
+            ves["text_brush"] = new SolidBrush(ForeColor);
+        }
+
         protected override void OnPaint(PaintEventArgs e)
         {
             var graphics = e.Graphics;
             var tip_size = graphics.MeasureString(_Tip, Font);
             graphics.DrawString(_Tip, Font, TextBrush,
                 (Width - tip_size.Width) / 2, (Height - tip_size.Height) / 2);
+            graphics.DrawRectangle(new Pen(Color.DarkGray, 2), new Rectangle(0, 0, Width, Height));
             base.OnPaint(e);
         }
 

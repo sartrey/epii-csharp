@@ -20,9 +20,8 @@
         {
             get
             {
-                var brush = VEs["text_brush"];
-                if (brush == null ||
-                    (brush as SolidBrush).Color != ForeColor) {
+                var brush = VEs["text_brush"] as SolidBrush;
+                if (brush == null || brush.Color != ForeColor) {
                     brush = new SolidBrush(ForeColor);
                     VEs["text_brush"] = brush;
                 }

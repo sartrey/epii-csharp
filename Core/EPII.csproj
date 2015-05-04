@@ -79,7 +79,7 @@
     <Compile Include="Data\Validator\Guard.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Model\Command\" />
+    <Folder Include="Data\Schema\" />
     <Folder Include="Model\Flow\" />
   </ItemGroup>
   <ItemGroup>

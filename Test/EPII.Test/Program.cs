@@ -10,6 +10,7 @@ namespace EPII.Test
             var runner = new Runner();
             //runner.Push(new CodeTest());
             //runner.Push(new DynDictTest());
+            runner.Push(new ValidatorTest());
             runner.Run(1);
             Console.WriteLine();
             Console.ReadKey();
