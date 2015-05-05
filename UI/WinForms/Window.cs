@@ -3,9 +3,21 @@
     using EPII.Front;
     using System.Windows.Forms;
 
-    public class Window : IWindow
+    public class Window : ObjectEx, IWindow
     {
         private Form _WindowCore = null;
+
+        public bool CanClose
+        {
+            get 
+            {
+                var view = View as IWindowView;
+                if (view != null) {
+                    return view.CanClose();
+                }
+                return true;
+            }
+        }
 
         public bool HasView
         {
@@ -30,6 +42,17 @@
         public Window() 
         {
             _WindowCore = new Form();
+            _WindowCore.FormClosing += WindowCore_FormClosing;
+        }
+
+        private void WindowCore_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason != CloseReason.ApplicationExitCall) {
+                if (CanClose) {
+                    Close();
+                }
+                e.Cancel = true;
+            }
         }
 
         private void AdaptView()
@@ -49,6 +72,17 @@
         {
             _WindowCore.Hide();
             _WindowCore.Controls.Clear();
+        }
+
+        protected override void DisposeManaged()
+        {
+            _WindowCore.FormClosing -= WindowCore_FormClosing;
+            _WindowCore.Controls.Clear();
+            _WindowCore.Dispose();
+        }
+
+        protected override void DisposeNative()
+        {
         }
     }
 }

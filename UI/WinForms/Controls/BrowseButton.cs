@@ -22,7 +22,7 @@ namespace EPII.UI.WinForms
         private string _Tip = null;
         private string _Path = null;
 
-        private bool _IsMouseMove = false;
+        private bool _IsButtonHit = false;
 
         private Brush TextBrush
         {
@@ -64,9 +64,15 @@ namespace EPII.UI.WinForms
             get { return _Tip; }
             set 
             {
-                _Tip = value; 
-                Refresh();
+                _Tip = value;
+                Invalidate();
             }
+        }
+
+        public override string Text 
+        {
+            get { return Tip; }
+            set { Tip = value; }
         }
 
         [Browsable(false)]
@@ -89,7 +95,7 @@ namespace EPII.UI.WinForms
             set 
             {
                 _Path = value;
-                Refresh();
+                Invalidate();
             }
         }
 
@@ -114,7 +120,8 @@ namespace EPII.UI.WinForms
         protected override void BuildVEs(Table<object> ves)
         {
             base.BuildVEs(ves);
-            ves["move_brush"] = new SolidBrush(Color.Orange);
+            ves["move_brush"] = new SolidBrush(
+                Color.FromArgb(255, 255, 220, 150));
             ves["leave_brush"] = new SolidBrush(Color.LightBlue);
             ves["text_brush"] = new SolidBrush(ForeColor);
         }
@@ -133,29 +140,32 @@ namespace EPII.UI.WinForms
         {
             var graphics = e.Graphics;
             graphics.Clear(BackColor);
-            if (_IsMouseMove)
+            if (_IsButtonHit)
                 graphics.FillRectangle(MouseMoveBrush, new Rectangle(0, 0, Width, Height));
             else
                 graphics.FillRectangle(MouseLeaveBrush, new Rectangle(0, 0, Width, Height));
         }
 
-        protected override void OnMouseMove(MouseEventArgs e)
+        protected override void OnMouseEnter(EventArgs e)
         {
-            base.OnMouseMove(e);
-            _IsMouseMove = true;
-            Refresh();
+            base.OnMouseEnter(e);
+            _IsButtonHit = true;
+            Invalidate();
         }
 
         protected override void OnMouseLeave(EventArgs e)
         {
             base.OnMouseLeave(e);
-            _IsMouseMove = false;
-            Refresh();
+            _IsButtonHit = false;
+            Invalidate();
         }
 
         protected override void OnMouseClick(MouseEventArgs e)
         {
             base.OnMouseClick(e);
+            Focus();
+            if (e.Button != MouseButtons.Left)
+                return;
             var result = Dialog.ShowDialog();
             if (result != DialogResult.OK)
                 return;

@@ -4,6 +4,16 @@
 
     public class WindowPool
     {
+        public static WindowPool Instance 
+        {
+            get 
+            { 
+                var runtime = Runtime.Instance;
+                var front = runtime.Use<Front.Startup>();
+                return front.WindowPool;
+            }
+        }
+
         private object _SyncRoot = new object();
         private List<IWindow> _Windows
             = new List<IWindow>();

@@ -11,9 +11,11 @@ namespace EPII.Test.WinForms
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            ///*
             var form1 = new FrmControls();
             form1.Show();
             Application.Run();
+            //*/
 
             /*
             var runtime = Runtime.Instance;

@@ -69,7 +69,7 @@
             {
                 _HeaderText = value;
                 UpdateTextSpan();
-                Refresh();
+                Invalidate();
             }
         }
 
@@ -81,7 +81,7 @@
             {
                 _NoteText = value;
                 UpdateTextSpan();
-                Refresh();
+                Invalidate();
             }
         }
 
@@ -119,6 +119,13 @@
             NoteText = "Note";
         }
 
+        protected override void OnGotFocus(EventArgs e)
+        {
+            base.OnGotFocus(e);
+            if (Content != null)
+                Content.Focus();
+        }
+
         protected override void OnPaint(PaintEventArgs e)
         {
             var graphics = e.Graphics;
@@ -131,7 +138,7 @@
                 graphics.DrawRectangle(pen1, rect);
                 graphics.DrawRectangle(pen2,
                     new Rectangle(Padding.Left + _HeaderSize.Width + 3, 0,
-                        Width - Padding.Left - Padding.Right - _HeaderSize.Width - _NoteSize.Width - 6,
+                        Width - Padding.Horizontal - _HeaderSize.Width - _NoteSize.Width - 6,
                         Height));
             }
             graphics.DrawString(_HeaderText, Font, TextBrush,
@@ -144,16 +151,14 @@
 
         protected override void OnSizeChanged(EventArgs e)
         {
-            var control = Content as Control;
-            if (control != null) {
-                control.Left = Padding.Left + _HeaderSize.Width + 3;
-                control.Top = Padding.Top;
+            if (Content != null) {
+                Content.Left = Padding.Left + _HeaderSize.Width + 3;
+                Content.Top = Padding.Top;
                 var width = Width - 6
-                        - Padding.Left - Padding.Right
-                        - HeaderSpan - NoteSpan;
+                        - Padding.Horizontal - HeaderSpan - NoteSpan;
                 if (width < 0) width = 0;
-                control.Width = width;
-                control.Height = Height - Padding.Top - Padding.Bottom;
+                Content.Width = width;
+                Content.Height = Height - Padding.Vertical;
             }
             base.OnSizeChanged(e);
             Refresh();
@@ -165,6 +170,7 @@
                 var graphics = CreateGraphics();
                 _HeaderSize = graphics.MeasureString(_HeaderText, Font).ToSize();
                 _NoteSize = graphics.MeasureString(_NoteText, Font).ToSize();
+                OnSizeChanged(null);
             }
         }
 

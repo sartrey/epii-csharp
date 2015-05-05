@@ -1,9 +1,9 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-
-namespace EPII.UI.WinForms
+﻿namespace EPII.UI.WinForms
 {
+    using System;
+    using System.Drawing;
+    using System.Windows.Forms;
+
     public class ToolStripTextBoxEx : ToolStripTextBox
     {
         public override Size GetPreferredSize(Size constrainingSize)
@@ -34,7 +34,7 @@ namespace EPII.UI.WinForms
                 width /= ex_count;
             if (width < DefaultSize.Width) 
                 width = DefaultSize.Width;
-            Size size = base.GetPreferredSize(constrainingSize);
+            var size = base.GetPreferredSize(constrainingSize);
             size.Width = width;
             return size;
         }

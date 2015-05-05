@@ -51,24 +51,17 @@
     <Compile Include="Controls\DataCard.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\DateField.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Controls\FieldPanel\FieldPanel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\FieldPanel\FieldPanelDesigner.cs" />
-    <Compile Include="Controls\SelectField.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\TextField.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Controls\ToolStripTextBoxEx.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="MouseState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Controls\TextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ViewEx.cs">
       <SubType>UserControl</SubType>
     </Compile>

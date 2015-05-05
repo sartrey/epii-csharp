@@ -27,38 +27,67 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.browseButton1 = new EPII.UI.WinForms.BrowseButton();
-            this.fieldPanel1 = new EPII.UI.WinForms.FieldPanel();
-            this.fieldPanel1.SuspendLayout();
+            this.Field2 = new EPII.UI.WinForms.FieldPanel();
+            this.TextBoxB = new EPII.UI.WinForms.TextBox();
+            this.Field1 = new EPII.UI.WinForms.FieldPanel();
+            this.BtnBrowseA = new EPII.UI.WinForms.BrowseButton();
+            this.Field2.SuspendLayout();
+            this.Field1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // browseButton1
+            // Field2
             // 
-            this.browseButton1.BackColor = System.Drawing.Color.LightCyan;
-            this.browseButton1.Location = new System.Drawing.Point(75, 0);
-            this.browseButton1.Mode = EPII.UI.WinForms.BrowseButton.BrowseMode.OpenFile;
-            this.browseButton1.Name = "browseButton1";
-            this.browseButton1.Size = new System.Drawing.Size(328, 30);
-            this.browseButton1.TabIndex = 1;
-            this.browseButton1.Text = "browseButton1";
-            this.browseButton1.Tip = "点击这里";
+            this.Field2.BackColor = System.Drawing.Color.Transparent;
+            this.Field2.Content = this.TextBoxB;
+            this.Field2.Controls.Add(this.TextBoxB);
+            this.Field2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.Field2.HeaderSpan = 34;
+            this.Field2.HeaderText = "文本B";
+            this.Field2.Location = new System.Drawing.Point(0, 30);
+            this.Field2.Name = "Field2";
+            this.Field2.NoteSpan = 10;
+            this.Field2.NoteText = "*";
+            this.Field2.Size = new System.Drawing.Size(434, 30);
+            this.Field2.SpanLocked = false;
+            this.Field2.TabIndex = 1;
+            this.Field2.Text = "文本B";
             // 
-            // fieldPanel1
+            // TextBoxB
             // 
-            this.fieldPanel1.BackColor = System.Drawing.Color.Transparent;
-            this.fieldPanel1.Content = this.browseButton1;
-            this.fieldPanel1.Controls.Add(this.browseButton1);
-            this.fieldPanel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.fieldPanel1.HeaderSpan = 72;
-            this.fieldPanel1.HeaderText = "fieldPanel1";
-            this.fieldPanel1.Location = new System.Drawing.Point(0, 0);
-            this.fieldPanel1.Name = "fieldPanel1";
-            this.fieldPanel1.NoteSpan = 28;
-            this.fieldPanel1.NoteText = "Note";
-            this.fieldPanel1.Size = new System.Drawing.Size(434, 30);
-            this.fieldPanel1.SpanLocked = false;
-            this.fieldPanel1.TabIndex = 0;
-            this.fieldPanel1.Text = "fieldPanel1";
+            this.TextBoxB.Font = new System.Drawing.Font("微软雅黑", 10F);
+            this.TextBoxB.Location = new System.Drawing.Point(37, 0);
+            this.TextBoxB.Name = "TextBoxB";
+            this.TextBoxB.OldText = null;
+            this.TextBoxB.Size = new System.Drawing.Size(384, 30);
+            this.TextBoxB.TabIndex = 2;
+            // 
+            // Field1
+            // 
+            this.Field1.BackColor = System.Drawing.Color.Transparent;
+            this.Field1.Content = this.BtnBrowseA;
+            this.Field1.Controls.Add(this.BtnBrowseA);
+            this.Field1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.Field1.HeaderSpan = 34;
+            this.Field1.HeaderText = "文件A";
+            this.Field1.Location = new System.Drawing.Point(0, 0);
+            this.Field1.Name = "Field1";
+            this.Field1.NoteSpan = 10;
+            this.Field1.NoteText = "*";
+            this.Field1.Size = new System.Drawing.Size(434, 30);
+            this.Field1.SpanLocked = false;
+            this.Field1.TabIndex = 0;
+            this.Field1.Text = "文件A";
+            // 
+            // BtnBrowseA
+            // 
+            this.BtnBrowseA.BackColor = System.Drawing.Color.LightCyan;
+            this.BtnBrowseA.Location = new System.Drawing.Point(37, 0);
+            this.BtnBrowseA.Mode = EPII.UI.WinForms.BrowseButton.BrowseMode.OpenFile;
+            this.BtnBrowseA.Name = "BtnBrowseA";
+            this.BtnBrowseA.Size = new System.Drawing.Size(384, 30);
+            this.BtnBrowseA.TabIndex = 1;
+            this.BtnBrowseA.Text = "点击这里浏览文件";
+            this.BtnBrowseA.Tip = "点击这里浏览文件";
             // 
             // FrmControls
             // 
@@ -66,19 +95,23 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(434, 261);
-            this.Controls.Add(this.fieldPanel1);
+            this.Controls.Add(this.Field2);
+            this.Controls.Add(this.Field1);
             this.Name = "FrmControls";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Controls";
-            this.fieldPanel1.ResumeLayout(false);
+            this.Field2.ResumeLayout(false);
+            this.Field1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private UI.WinForms.FieldPanel fieldPanel1;
-        private UI.WinForms.BrowseButton browseButton1;
+        private UI.WinForms.FieldPanel Field1;
+        private UI.WinForms.BrowseButton BtnBrowseA;
+        private UI.WinForms.FieldPanel Field2;
+        private UI.WinForms.TextBox TextBoxB;
 
     }
 }

@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace EPII.Test.WinForms
 {
-    public partial class PersonView : UserControl, IView<PersonViewModel>
+    public partial class PersonView : UserControl, IView<PersonViewModel>, IWindowView
     {
         private PersonViewModel _ViewModel;
 
@@ -21,6 +21,17 @@ namespace EPII.Test.WinForms
             this.Load += new EventHandler(
                 (sender, e) => { viewmodel.GetNextPerson(); });
             _ViewModel = viewmodel;
+        }
+
+        public bool CanClose()
+        {
+            var result = MessageBox.Show(
+                "close?", "close", 
+                MessageBoxButtons.OKCancel, 
+                MessageBoxIcon.Question);
+            if (result == DialogResult.OK)
+                return true;
+            return false;
         }
     }
 }

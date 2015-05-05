@@ -29,7 +29,12 @@ namespace EPII.UI.WinForms
         [Browsable(false)]
         public bool HasData 
         {
-            get { return _Data.Rows.Count > 0; }
+            get 
+            {
+                if (_Data == null)
+                    return false;
+                return _Data.Rows.Count > 0; 
+            }
         }
 
         [Browsable(false)]
@@ -39,7 +44,8 @@ namespace EPII.UI.WinForms
             {
                 foreach (var control in Controls)
                 {
-                    var input = control as TextField;
+                    var panel = control as FieldPanel;
+                    var input = panel.Content as TextBox;
                     if (input.HasChanged)
                         return true;
                 }
@@ -60,18 +66,17 @@ namespace EPII.UI.WinForms
             for (int i = 0; i < _Data.Columns.Count; i++)
             {
                 var column = _Data.Columns[i];
-                var input = new TextField();
-                input.HeaderText = column.ColumnName;
-                input.NoteText = "";
-                input.Padding = new Padding(2);
+                var input = new TextBox();
                 if (row != null)
-                {
-                    input.InputText = row[i].ToString();
-                    input.OldText = row[i].ToString();
-                }
-                input.Dock = DockStyle.Top;
-                input.MouseMove += Input_MouseMove;
-                controls.Add(input);
+                    input.OldText = input.Text = row[i].ToString();
+                var panel = new FieldPanel();
+                panel.HeaderText = column.ColumnName;
+                panel.NoteText = "";
+                panel.Padding = new Padding(2);
+                panel.Content = input;
+                panel.Dock = DockStyle.Top;
+                panel.MouseMove += Input_MouseMove;
+                controls.Add(panel);
             }
             controls.Reverse();
             Controls.Clear();
@@ -84,10 +89,11 @@ namespace EPII.UI.WinForms
         {
             foreach (var control in Controls)
             {
-                var field = control as TextField;
+                var field = control as FieldPanel;
                 if (field.Text == name)
                 {
-                    field.InputText = value;
+                    var input = field.Content as TextBox;
+                    input.Text = value;
                     break;
                 }
             }
@@ -96,7 +102,7 @@ namespace EPII.UI.WinForms
         protected override void OnSizeChanged(EventArgs e)
         {
             foreach (var control in Controls) {
-                var field = control as TextField;
+                var field = control as FieldPanel;
                 field.HeaderSpan = (int)(Width * 0.36);
             }
             base.OnSizeChanged(e);
@@ -104,20 +110,17 @@ namespace EPII.UI.WinForms
 
         private void Input_MouseMove(object sender, MouseEventArgs e)
         {
-            foreach(Control control in Controls)
-            {
-                if (control == sender)
-                {
-                    control.BackColor = Color.Orange;
-                    control.Focus();
-                }
-                else
-                {
-                    var input = control as TextField;
-                    if(input.HasChanged)
-                        control.BackColor = Color.Red;
-                    else 
-                        control.BackColor = Color.Transparent;
+            foreach (var control in Controls) {
+                var field = control as FieldPanel;
+                if (field == sender) {
+                    field.BackColor = Color.Orange;
+                    field.Focus();
+                } else {
+                    var input = field.Content as TextBox;
+                    if (input.HasChanged)
+                        field.BackColor = Color.Red;
+                    else
+                        field.BackColor = Color.Transparent;
                 }
             }
         }
