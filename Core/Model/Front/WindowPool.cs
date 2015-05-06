@@ -19,6 +19,12 @@
             = new List<IWindow>();
         private int _MaxCache = 16;
 
+        public void TryRelease() 
+        {
+            if(_Windows.Count > _MaxCache)
+                _Windows.RemoveAll(e => !e.HasView);
+        }
+
         public T One<T>()
             where T : class, IWindow, new()
         {
@@ -35,10 +41,13 @@
             return new_window;
         }
 
-        public void TryRelease() 
+        public IWindow Whose(IView view) 
         {
-            if(_Windows.Count > _MaxCache)
-                _Windows.RemoveAll(e => !e.HasView);
+            foreach (var window in _Windows) {
+                if (window.View == view)
+                    return window;
+            }
+            return null;
         }
     }
 }

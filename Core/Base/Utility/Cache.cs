@@ -10,19 +10,19 @@
         private int _MaxTicks = 16;
         private int _Ticks = 0;
 
-        private event Action<object> _ChangeCommitted = null;
+        private event Action<object> _CacheCommit = null;
 
-        public event Action<object> ChangeCommitted
+        public event Action<object> CacheCommit
         {
             add
             {
                 if (value != null)
-                    _ChangeCommitted += value;
+                    _CacheCommit += value;
             }
             remove
             {
                 if (value != null)
-                    _ChangeCommitted -= value;
+                    _CacheCommit -= value;
             }
         }
 
@@ -71,9 +71,9 @@
         {
             if (Disposed)
                 return;
-            if (_ChangeCommitted != null) {
+            if (_CacheCommit != null) {
                 try {
-                    _ChangeCommitted(_Data);
+                    _CacheCommit(_Data);
                 } catch (Exception ex) {
                     Diagnose.TraceError(
                         "Cache", "InnerCommit", ex.Message);

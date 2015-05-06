@@ -33,5 +33,14 @@ namespace EPII.Test.WinForms
                 return true;
             return false;
         }
+
+        public void OnWindowOpened()
+        {
+        }
+
+        public void OnWindowClosed()
+        {
+            Application.Exit();
+        }
     }
 }

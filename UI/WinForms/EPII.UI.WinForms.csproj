@@ -62,20 +62,18 @@
     <Compile Include="Controls\TextBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ViewEx.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="ViewModel.cs" />
-    <Compile Include="WindowEx.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Window.cs" />
+    <Compile Include="WindowStyle.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\EPII.csproj">
       <Project>{97d038bd-9ce3-443d-b93d-492d2bd0381d}</Project>
       <Name>EPII</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Styles\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

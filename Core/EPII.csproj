@@ -39,6 +39,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\Extend\EventEx.cs" />
+    <Compile Include="Base\Front\IStyle.cs" />
+    <Compile Include="Base\Front\IStyleTarget.cs" />
     <Compile Include="Base\Utility\Cache.cs" />
     <Compile Include="Base\Diagnose.cs" />
     <Compile Include="Base\Thread\Loop.cs" />

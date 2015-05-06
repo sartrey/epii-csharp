@@ -1,9 +1,15 @@
 ﻿namespace EPII.Front
 {
-    public interface IView { }
+    public interface IView 
+    {
+    }
 
     public interface IWindowView : IView
     {
+        void OnWindowClosed();
+
+        void OnWindowOpened();
+        
         bool CanClose();
     }
 
