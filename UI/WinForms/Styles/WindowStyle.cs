@@ -11,8 +11,9 @@
             = FormWindowState.Normal;
         private FormStartPosition _StartPosition
             = FormStartPosition.CenterScreen;
-        private string _Title
-            = null;
+        private bool _IsModal = false;
+        private bool _SizeLocked = false;
+        private string _Title = null;
 
         public FormBorderStyle BorderStyle 
         {
@@ -36,6 +37,18 @@
         {
             get { return _Title; }
             set { _Title = value; }
+        }
+
+        public bool SizeLocked 
+        {
+            get { return _SizeLocked; }
+            set { _SizeLocked = value; }
+        }
+
+        public bool IsModal 
+        {
+            get { return _IsModal; }
+            set { _IsModal = value; }
         }
     }
 }

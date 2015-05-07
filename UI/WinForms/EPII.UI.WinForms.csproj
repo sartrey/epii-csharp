@@ -64,7 +64,8 @@
     </Compile>
     <Compile Include="ViewModel.cs" />
     <Compile Include="Window.cs" />
-    <Compile Include="WindowStyle.cs" />
+    <Compile Include="Window.Handler.cs" />
+    <Compile Include="Styles\WindowStyle.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\EPII.csproj">
@@ -72,9 +73,7 @@
       <Name>EPII</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Styles\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

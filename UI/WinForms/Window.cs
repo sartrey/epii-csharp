@@ -4,9 +4,10 @@
     using System;
     using System.Windows.Forms;
 
-    public class Window : ObjectEx, IWindow, IStyleTarget<WindowStyle>
+    public partial class Window : ObjectEx, IWindow, IStyleTarget<WindowStyle>
     {
         private Form _WindowCore = null;
+        private WindowStyle _Style = null;
 
         public bool CanClose
         {
@@ -27,83 +28,75 @@
 
         public IView View
         {
-            get 
+            get
             {
-                if(HasView)
+                if (HasView)
                     return _WindowCore.Controls[0] as IView;
                 return null;
             }
             set
             {
-                if (HasView)
-                    return;
-                var view = value as UserControl;
-                if (view == null)
-                    return;
-                _WindowCore.Controls.Add(view);
-                AdaptView();
+                if (!HasView) {
+                    var view = value as UserControl;
+                    if (view != null) {
+                        _WindowCore.Controls.Add(view);
+                        OnViewChanged();
+                    }
+                }
             }
         }
 
         public Window()
         {
             _WindowCore = new Form();
-            _WindowCore.Load += WindowCore_Load;
-            _WindowCore.FormClosing += WindowCore_FormClosing;
+            ProcessHandler(true);
         }
 
-        private void WindowCore_Load(object sender, EventArgs e) 
-        {
-            var view = View as IWindowView;
-            if (view != null)
-                view.OnWindowOpened();
-        }
-
-        private void WindowCore_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (e.CloseReason != CloseReason.ApplicationExitCall) {
-                e.Cancel = true; //WindowPool need to hide self instead of close
-                var view = View as IWindowView;
-                if (view != null && !view.CanClose())
-                    return;
-                Close();
-            }
-        }
-
-        private void AdaptView()
+        protected virtual void OnViewChanged()
         {
             var content = View as UserControl;
             _WindowCore.ClientSize = content.Size;
-            _WindowCore.StartPosition = FormStartPosition.CenterScreen;
             _WindowCore.SizeGripStyle = SizeGripStyle.Hide;
             content.Dock = DockStyle.Fill;
         }
 
         public void Open()
         {
-            _WindowCore.Show();
+            if (_Style.IsModal) {
+                _WindowCore.ShowDialog();
+            } else {
+                _WindowCore.Show();
+            }
         }
 
         public void Close()
         {
             var view = View as IWindowView;
-            if (view != null)
+            if (view != null) {
                 view.OnWindowClosed();
+            }
             _WindowCore.Hide();
             _WindowCore.Controls.Clear();
         }
 
         public void Apply(WindowStyle style)
         {
-            _WindowCore.FormBorderStyle = style.BorderStyle;
-            _WindowCore.WindowState = style.WindowState;
-            _WindowCore.Text = style.Title;
+            _Style = style;
+            InnerApplyStyle();
+        }
+
+        protected virtual void InnerApplyStyle() 
+        {
+            _WindowCore.FormBorderStyle = _Style.BorderStyle;
+            _WindowCore.WindowState = _Style.WindowState;
+            _WindowCore.StartPosition = _Style.StartPosition;
+            //todo: try to reset start position cache
+            _WindowCore.Text = _Style.Title;
         }
 
         protected override void DisposeManaged()
         {
-            _WindowCore.FormClosing -= WindowCore_FormClosing;
-            _WindowCore.Load -= WindowCore_Load;
+            ProcessHandler(false);
             this.Close();
             _WindowCore.Dispose();
         }

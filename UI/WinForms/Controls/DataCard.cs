@@ -70,6 +70,7 @@ namespace EPII.UI.WinForms
                 if (row != null)
                     input.OldText = input.Text = row[i].ToString();
                 var panel = new FieldPanel();
+                panel.Height = 28;
                 panel.HeaderText = column.ColumnName;
                 panel.NoteText = "";
                 panel.Padding = new Padding(2);
