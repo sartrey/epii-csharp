@@ -1,7 +1,6 @@
 ﻿namespace EPII.UI.WinForms
 {
     using EPII.Front;
-    using System;
     using System.Windows.Forms;
 
     public partial class Window : ObjectEx, IWindow, IStyleTarget<WindowStyle>
@@ -46,26 +45,36 @@
             }
         }
 
+        protected Form WindowCore 
+        {
+            get 
+            {
+                if (_WindowCore == null) {
+                    _WindowCore = new Form();
+                    ProcessHandler();
+                }
+                return _WindowCore; 
+            }
+        }
+
         public Window()
         {
-            _WindowCore = new Form();
-            ProcessHandler(true);
         }
 
         protected virtual void OnViewChanged()
         {
             var content = View as UserControl;
-            _WindowCore.ClientSize = content.Size;
-            _WindowCore.SizeGripStyle = SizeGripStyle.Hide;
+            WindowCore.ClientSize = content.Size;
+            WindowCore.SizeGripStyle = SizeGripStyle.Hide;
             content.Dock = DockStyle.Fill;
         }
 
         public void Open()
         {
             if (_Style.IsModal) {
-                _WindowCore.ShowDialog();
+                WindowCore.ShowDialog();
             } else {
-                _WindowCore.Show();
+                WindowCore.Show();
             }
         }
 
@@ -75,8 +84,9 @@
             if (view != null) {
                 view.OnWindowClosed();
             }
-            _WindowCore.Hide();
-            _WindowCore.Controls.Clear();
+            ProcessHandler(false);
+            WindowCore.Controls.Clear();
+            WindowCore.Close();
         }
 
         public void Apply(WindowStyle style)
@@ -87,18 +97,16 @@
 
         protected virtual void InnerApplyStyle() 
         {
-            _WindowCore.FormBorderStyle = _Style.BorderStyle;
-            _WindowCore.WindowState = _Style.WindowState;
-            _WindowCore.StartPosition = _Style.StartPosition;
-            //todo: try to reset start position cache
-            _WindowCore.Text = _Style.Title;
+            WindowCore.FormBorderStyle = _Style.BorderStyle;
+            WindowCore.WindowState = _Style.WindowState;
+            WindowCore.StartPosition = _Style.StartPosition;
+            WindowCore.Text = _Style.Title;
         }
 
         protected override void DisposeManaged()
         {
-            ProcessHandler(false);
-            this.Close();
-            _WindowCore.Dispose();
+            Close();
+            //do something other
         }
 
         protected override void DisposeNative()

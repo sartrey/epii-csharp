@@ -31,11 +31,12 @@
         private void OnWindowCoreClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason != CloseReason.ApplicationExitCall) {
-                e.Cancel = true; //WindowPool need to hide self instead of close
                 var view = View as IWindowView;
-                if (view != null && !view.CanClose())
+                if (view != null && !view.CanClose()) {
+                    e.Cancel = true;
                     return;
-                Close();
+                }
+                //Close(not close core, it will close by itself)
             }
         }
 
