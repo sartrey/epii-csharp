@@ -6,6 +6,46 @@
 
     public partial class Window
     {
+        protected bool InnerCanClose()
+        {
+            var view = View as IWindowView;
+            if (view != null)
+                return view.CanClose();
+            return true;
+        }
+
+        protected void InnerCreateWindowCore() 
+        {
+            _WindowCore = new Form();
+            ProcessHandler(true);
+        }
+
+        protected void InnerHostView(Control view) 
+        {
+            WindowCore.ClientSize = view.Size;
+            WindowCore.SizeGripStyle = SizeGripStyle.Hide;
+            WindowCore.Controls.Add(view);
+            view.Dock = DockStyle.Fill;
+        }
+
+        protected void InnerDumpView()
+        {
+            var view = View as IWindowView;
+            if (view != null)
+                view.OnWindowClosed();
+            ProcessHandler(false);
+            WindowCore.Controls.Clear();
+        }
+
+        protected virtual void InnerApplyStyle()
+        {
+            WindowCore.FormBorderStyle = _Style.BorderStyle;
+            WindowCore.WindowState = _Style.WindowState;
+            WindowCore.StartPosition = _Style.StartPosition;
+            WindowCore.Text = _Style.Title;
+        }
+
+
         protected virtual void ProcessHandler(bool bind = true) 
         {
             if (bind) {
@@ -31,12 +71,11 @@
         private void OnWindowCoreClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason != CloseReason.ApplicationExitCall) {
-                var view = View as IWindowView;
-                if (view != null && !view.CanClose()) {
+                if (InnerCanClose()) {
+                    InnerDumpView();
+                } else {
                     e.Cancel = true;
-                    return;
                 }
-                //Close(not close core, it will close by itself)
             }
         }
 

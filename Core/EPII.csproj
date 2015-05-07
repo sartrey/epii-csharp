@@ -54,6 +54,7 @@
     <Compile Include="Model\Front\Director.cs" />
     <Compile Include="Model\Front\ViewPool.cs" />
     <Compile Include="Model\Front\ViewModel.cs" />
+    <Compile Include="Model\Front\WindowPool.cs" />
     <Compile Include="Model\IModel.cs" />
     <Compile Include="Model\Area\DataAccess.cs" />
     <Compile Include="Model\Area\Area.cs" />

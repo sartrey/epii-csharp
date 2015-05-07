@@ -1,6 +1,7 @@
 ﻿namespace EPII.UI.WinForms
 {
     using EPII.Front;
+    using System;
     using System.Windows.Forms;
 
     public partial class Window : ObjectEx, IWindow, IStyleTarget<WindowStyle>
@@ -8,18 +9,16 @@
         private Form _WindowCore = null;
         private WindowStyle _Style = null;
 
-        public bool CanClose
+        protected Form WindowCore
         {
             get
             {
-                var view = View as IWindowView;
-                if (view != null) {
-                    return view.CanClose();
-                }
-                return true;
+                if (_WindowCore == null)
+                    InnerCreateWindowCore();
+                return _WindowCore;
             }
         }
-
+        
         public bool HasView
         {
             get { return _WindowCore.Controls.Count > 0; }
@@ -35,25 +34,11 @@
             }
             set
             {
-                if (!HasView) {
-                    var view = value as UserControl;
-                    if (view != null) {
-                        _WindowCore.Controls.Add(view);
-                        OnViewChanged();
-                    }
-                }
-            }
-        }
-
-        protected Form WindowCore 
-        {
-            get 
-            {
-                if (_WindowCore == null) {
-                    _WindowCore = new Form();
-                    ProcessHandler();
-                }
-                return _WindowCore; 
+                if (HasView)
+                    throw new Exception();
+                var view = value as UserControl;
+                if (view != null)
+                    InnerHostView(view);
             }
         }
 
@@ -63,10 +48,6 @@
 
         protected virtual void OnViewChanged()
         {
-            var content = View as UserControl;
-            WindowCore.ClientSize = content.Size;
-            WindowCore.SizeGripStyle = SizeGripStyle.Hide;
-            content.Dock = DockStyle.Fill;
         }
 
         public void Open()
@@ -80,13 +61,10 @@
 
         public void Close()
         {
-            var view = View as IWindowView;
-            if (view != null) {
-                view.OnWindowClosed();
+            if (InnerCanClose()) {
+                InnerDumpView();
+                WindowCore.Close();
             }
-            ProcessHandler(false);
-            WindowCore.Controls.Clear();
-            WindowCore.Close();
         }
 
         public void Apply(WindowStyle style)
@@ -95,18 +73,10 @@
             InnerApplyStyle();
         }
 
-        protected virtual void InnerApplyStyle() 
-        {
-            WindowCore.FormBorderStyle = _Style.BorderStyle;
-            WindowCore.WindowState = _Style.WindowState;
-            WindowCore.StartPosition = _Style.StartPosition;
-            WindowCore.Text = _Style.Title;
-        }
-
         protected override void DisposeManaged()
         {
-            Close();
-            //do something other
+            this.Close();
+            //do sth else
         }
 
         protected override void DisposeNative()

@@ -64,7 +64,7 @@
     </Compile>
     <Compile Include="ViewModel.cs" />
     <Compile Include="Window.cs" />
-    <Compile Include="Window.Handler.cs" />
+    <Compile Include="Window.Inner.cs" />
     <Compile Include="Styles\WindowStyle.cs" />
   </ItemGroup>
   <ItemGroup>
