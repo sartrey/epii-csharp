@@ -14,10 +14,18 @@
             return true;
         }
 
-        protected void InnerCreateWindowCore() 
+        protected void InnerOpenWindowCore() 
         {
             _WindowCore = new Form();
             ProcessHandler(true);
+        }
+
+        protected void InnerCloseWindowCore()
+        {
+            ProcessHandler(false);
+            if (!_WindowCore.IsDisposed)
+                _WindowCore.Close();
+            _WindowCore = null;
         }
 
         protected void InnerHostView(Control view) 
@@ -33,7 +41,6 @@
             var view = View as IWindowView;
             if (view != null)
                 view.OnWindowClosed();
-            ProcessHandler(false);
             WindowCore.Controls.Clear();
         }
 
@@ -73,6 +80,7 @@
             if (e.CloseReason != CloseReason.ApplicationExitCall) {
                 if (InnerCanClose()) {
                     InnerDumpView();
+                    InnerCloseWindowCore();
                 } else {
                     e.Cancel = true;
                 }

@@ -14,14 +14,14 @@
             get
             {
                 if (_WindowCore == null)
-                    InnerCreateWindowCore();
+                    InnerOpenWindowCore();
                 return _WindowCore;
             }
         }
         
         public bool HasView
         {
-            get { return _WindowCore.Controls.Count > 0; }
+            get { return WindowCore.Controls.Count > 0; }
         }
 
         public IView View
@@ -29,7 +29,7 @@
             get
             {
                 if (HasView)
-                    return _WindowCore.Controls[0] as IView;
+                    return WindowCore.Controls[0] as IView;
                 return null;
             }
             set
@@ -63,7 +63,7 @@
         {
             if (InnerCanClose()) {
                 InnerDumpView();
-                WindowCore.Close();
+                InnerCloseWindowCore();
             }
         }
 

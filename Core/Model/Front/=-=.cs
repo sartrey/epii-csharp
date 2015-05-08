@@ -26,6 +26,8 @@
         public Startup()
         {
             _Director = new Director();
+            _ViewPool = new ViewPool();
+            _WindowPool = new WindowPool();
         }
     }
 }
