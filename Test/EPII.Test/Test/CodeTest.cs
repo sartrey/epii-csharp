@@ -13,8 +13,9 @@ namespace EPII.Test
 
         public override void Prepare()
         {
-            AddAction(MakeLUC);
-            AddAction(RepeatLUC);
+            AddAction(TestCAIC);
+            //AddAction(MakeLUC);
+            //AddAction(RepeatLUC);
         }
 
         public void MakeLUC() 
@@ -42,6 +43,19 @@ namespace EPII.Test
                 strs2.Add(s);
             }
             Console.WriteLine("repeat:" + (strs1.Count - strs2.Count));
+        }
+
+        public void TestCAIC() 
+        {
+            var caic = new CAIC();
+            for (int i = 0; i < 10000000; i++) {
+                var v = caic.Next();
+                //Console.WriteLine("CAIC:" + v);
+                v = caic.Next();
+                //Console.WriteLine("CAIC:" + v);
+                caic.Revert(v - 1);
+                caic.Revert(v - 1);
+            }
         }
     }
 }

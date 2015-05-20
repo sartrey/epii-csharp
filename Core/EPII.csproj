@@ -38,6 +38,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\Code\CAIC.cs" />
     <Compile Include="Base\Extend\EventEx.cs" />
     <Compile Include="Base\Front\IStyle.cs" />
     <Compile Include="Base\Front\IStyleTarget.cs" />
