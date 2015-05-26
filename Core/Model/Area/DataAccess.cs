@@ -2,13 +2,13 @@
 {
     public abstract class DataAccess : ObjectEx
     {
-        protected bool _IsOpen;
+        protected bool opened_;
 
         public abstract string Name { get; }
 
-        public bool IsOpen
+        public bool IsOpened
         {
-            get { return _IsOpen; }
+            get { return opened_; }
         }
 
         protected abstract void OpenHandler();
@@ -19,22 +19,22 @@
 
         public void Open()
         {
-            if (!_IsOpen) {
+            if (!opened_) {
                 OpenHandler();
-                _IsOpen = true;
+                opened_ = true;
             }
         }
 
         public void Close()
         {
-            if (_IsOpen)
+            if (opened_)
                 CloseHandler();
-            _IsOpen = false;
+            opened_ = false;
         }
 
         public void Commit()
         {
-            if (_IsOpen)
+            if (opened_)
                 CommitHandler();
         }
 

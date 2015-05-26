@@ -2,16 +2,16 @@
 {
     public class Guard<T>
     {
-        private T _Data;
+        private T data_;
 
         public T Data 
         {
-            get { return _Data; }
+            get { return data_; }
         }
 
         public Guard(T data)
         {
-            _Data = data;
+            data_ = data;
         }
     }
 }

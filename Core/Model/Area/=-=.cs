@@ -2,16 +2,16 @@
 {
     public class Startup : ISingletonModel
     {
-        private AreaHub _AreaHub = null;
+        private AreaHub area_hub_ = null;
         
         public AreaHub AreaHub
         {
-            get { return _AreaHub; }
+            get { return area_hub_; }
         }
 
         public Startup()
         {
-            _AreaHub = new AreaHub();
+            area_hub_ = new AreaHub();
         }
     }
 }

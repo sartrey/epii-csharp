@@ -5,20 +5,20 @@
 
     public class Worker
     {
-        private Pipe<Action> _Jobs
+        private Pipe<Action> jobs_
             = new Pipe<Action>();
-        private Loop _Loop = null;
+        private Loop loop_ = null;
 
         public Worker()
         {
-            _Loop = new Loop(new Action(Routine));
+            loop_ = new Loop(new Action(Routine));
         }
 
         private void Routine()
         {
             Action job = null;
-            if (_Jobs.Count != 0)
-                job = _Jobs.Pull();
+            if (jobs_.Count != 0)
+                job = jobs_.Pull();
             if (job == null)
                 Thread.Sleep(50);
             else {
@@ -34,18 +34,18 @@
         public void Push(Action job)
         {
             if (job != null) {
-                _Jobs.Push(job);
+                jobs_.Push(job);
             }
         }
 
         public void Start()
         {
-            _Loop.Start();
+            loop_.Start();
         }
 
         public void Stop(int timeout = 10000)
         {
-            _Loop.Stop(timeout);
+            loop_.Stop(timeout);
         }
     }
 }

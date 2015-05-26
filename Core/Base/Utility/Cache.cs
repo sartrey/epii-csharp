@@ -4,60 +4,60 @@
 
     public class Cache : ObjectEx
     {
-        private object _SyncRoot = new object();
-        private object _Data = null;
-        private bool _IsEditable = false;
-        private int _MaxTicks = 16;
-        private int _Ticks = 0;
+        private object sync_mutex_ = new object();
+        private object data_ = null;
+        private bool editable_ = false;
+        private int max_ticks_ = 16;
+        private int ticks_ = 0;
 
-        private event Action<object> _CacheCommit = null;
+        private event Action<object> cache_commit_ = null;
 
         public event Action<object> CacheCommit
         {
             add
             {
                 if (value != null)
-                    _CacheCommit += value;
+                    cache_commit_ += value;
             }
             remove
             {
                 if (value != null)
-                    _CacheCommit -= value;
+                    cache_commit_ -= value;
             }
         }
 
         public object Data
         {
-            get { return _Data; }
+            get { return data_; }
             set
             {
                 if (value == null)
                     return;
-                lock (_SyncRoot) {
-                    if (_Data == value)
+                lock (sync_mutex_) {
+                    if (data_ == value)
                         return;
-                    if (!_IsEditable)
+                    if (!editable_)
                         return;
-                    _Data = value;
-                    _Ticks = 0;
+                    data_ = value;
+                    ticks_ = 0;
                 }
             }
         }
 
         public int MaxTicks
         {
-            get { return _MaxTicks; }
+            get { return max_ticks_; }
             set
             {
-                lock (_SyncRoot) {
-                    _MaxTicks = value;
+                lock (sync_mutex_) {
+                    max_ticks_ = value;
                 }
             }
         }
 
         public bool IsNull
         {
-            get { return _Data == null; }
+            get { return data_ == null; }
         }
 
         public Cache()
@@ -71,14 +71,14 @@
         {
             if (Disposed)
                 return;
-            if (_CacheCommit != null) {
+            if (cache_commit_ != null) {
                 try {
-                    _CacheCommit(_Data);
+                    cache_commit_(data_);
                 } catch (Exception ex) {
                     Diagnose.TraceError(
                         "Cache", "InnerCommit", ex.Message);
                 }
-                _Ticks = 0;
+                ticks_ = 0;
             }
         }
 
@@ -86,10 +86,10 @@
         {
             if (Disposed)
                 return false;
-            lock (_SyncRoot) {
-                if (_IsEditable)
+            lock (sync_mutex_) {
+                if (editable_)
                     return false;
-                _IsEditable = true;
+                editable_ = true;
                 return true;
             }
         }
@@ -98,14 +98,14 @@
         {
             if (Disposed)
                 return;
-            lock (_SyncRoot) {
-                if (!_IsEditable)
+            lock (sync_mutex_) {
+                if (!editable_)
                     return;
                 if (changed) {
-                    if (++_Ticks == _MaxTicks)
+                    if (++ticks_ == max_ticks_)
                         InnerCommit();
                 }
-                _IsEditable = false;
+                editable_ = false;
             }
         }
 
@@ -113,28 +113,28 @@
         {
             if (Disposed)
                 return;
-            lock (_SyncRoot) {
-                if(_Ticks > 0)
+            lock (sync_mutex_) {
+                if(ticks_ > 0)
                     InnerCommit();
             }
         }
 
         public void Clear()
         {
-            lock (_SyncRoot) {
-                if (_IsEditable)
+            lock (sync_mutex_) {
+                if (editable_)
                     return;
-                _Data = null;
-                _Ticks = 0;
+                data_ = null;
+                ticks_ = 0;
             }
         }
 
         protected override void DisposeManaged()
         {
-            lock (_SyncRoot) {
-                if (_Ticks > 0)
+            lock (sync_mutex_) {
+                if (ticks_ > 0)
                     InnerCommit();
-                _Data = null;
+                data_ = null;
             }
         }
 

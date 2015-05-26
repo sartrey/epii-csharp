@@ -6,7 +6,7 @@
 
     public class Director
     {
-        private List<Type> _ViewTypes 
+        private List<Type> view_types_ 
             = new List<Type>();
 
         public Director() 
@@ -17,7 +17,7 @@
             where T : IViewModel
         {
             var target = typeof(IView<T>);
-            foreach (var type in _ViewTypes) {
+            foreach (var type in view_types_) {
                 if (type.HasInterface(target))
                     return (IView<T>)Activator.CreateInstance(type);
             }
@@ -28,7 +28,7 @@
         {
             var type = typeof(IView);
             var types = type.GetDerivedTypes(assembly);
-            _ViewTypes.AddRange(types);
+            view_types_.AddRange(types);
         }
 
         public IView<T> Activate<T>(T viewmodel)

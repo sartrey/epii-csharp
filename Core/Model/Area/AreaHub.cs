@@ -5,7 +5,7 @@ namespace EPII.Area
 {
     public class AreaHub
     {
-        private List<Area> _Areas
+        private List<Area> areas_
             = new List<Area>();
 
         public AreaHub()
@@ -14,14 +14,14 @@ namespace EPII.Area
 
         public int Count
         {
-            get { return _Areas.Count; }
+            get { return areas_.Count; }
         }
 
         public Area this[string name]
         {
             get
             {
-                return _Areas.Find(
+                return areas_.Find(
                     (e) => { return e.Name == name; });
             }
         }
@@ -30,25 +30,25 @@ namespace EPII.Area
         {
             get
             {
-                return _Areas.Find(
+                return areas_.Find(
                     (e) => { return e.Id == id; });
             }
         }
 
         public void Add(Area area)
         {
-            var exist = _Areas.Exists(
+            var exist = areas_.Exists(
                 (e) => { return e.Id == area.Id; });
             if (!exist)
-                _Areas.Add(area);
+                areas_.Add(area);
         }
 
         public void Remove(Area area)
         {
-            var old = _Areas.Find(
+            var old = areas_.Find(
                 (e) => { return e.Id == area.Id; });
             if (old != null)
-                _Areas.Remove(old);
+                areas_.Remove(old);
         }
     }
 }

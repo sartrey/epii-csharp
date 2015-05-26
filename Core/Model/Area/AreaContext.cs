@@ -13,36 +13,36 @@ namespace EPII.Area
             return context;
         }
 
-        private Area _Area = null;
-        private DataAccess[] _DataAccesses = null;
+        private Area area_ = null;
+        private DataAccess[] data_accesses_ = null;
 
         public Area Area
         {
-            get { return _Area; }
+            get { return area_; }
         }
 
         private AreaContext(Area area)
         {
-            _Area = area;
+            area_ = area;
         }
 
         public DataAccess GetDataAccess(string name)
         {
-            if (_DataAccesses == null)
-                _DataAccesses = _Area.CreateDataAccesses();
-            return _DataAccesses.FirstOrDefault(
+            if (data_accesses_ == null)
+                data_accesses_ = area_.CreateDataAccesses();
+            return data_accesses_.FirstOrDefault(
                 (e) => { return e.Name == name; });
         }
 
         public void Commit()
         {
-            foreach (var access in _DataAccesses)
+            foreach (var access in data_accesses_)
                 access.Commit();
         }
 
         protected override void DisposeManaged()
         {
-            foreach (var access in _DataAccesses) {
+            foreach (var access in data_accesses_) {
                 access.Close();
                 access.Dispose();
             }

@@ -8,18 +8,18 @@ namespace EPII
     /// </summary>
     public class Pipe<T>
     {
-        protected object _SyncRoot = new object();
-        protected Queue<T> _Contents
+        protected object sync_mutex_ = new object();
+        protected Queue<T> data_
             = new Queue<T>();
-        protected int _Volume = 1000;
+        protected int volume_ = 1000;
 
         public int Volume 
         {
-            get { return _Volume; }
+            get { return volume_; }
             set 
             {
-                lock (_SyncRoot) {
-                    _Volume = value;
+                lock (sync_mutex_) {
+                    volume_ = value;
                 }
             }
         }
@@ -28,8 +28,8 @@ namespace EPII
         {
             get
             {
-                lock (_SyncRoot) {
-                    return _Contents.Count;
+                lock (sync_mutex_) {
+                    return data_.Count;
                 }
             }
         }
@@ -42,17 +42,17 @@ namespace EPII
         {
             if (item == null)
                 return;
-            lock (_SyncRoot) {
-                if (_Volume > _Contents.Count)
-                    _Contents.Enqueue(item);
+            lock (sync_mutex_) {
+                if (volume_ > data_.Count)
+                    data_.Enqueue(item);
             }
         }
 
         public T Pull()
         {
-            lock (_SyncRoot) {
-                if (_Contents.Count > 0)
-                    return _Contents.Dequeue();
+            lock (sync_mutex_) {
+                if (data_.Count > 0)
+                    return data_.Dequeue();
             }
             throw new Exception();
         }

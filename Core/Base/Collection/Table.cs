@@ -7,16 +7,16 @@ namespace EPII
     /// </summary>
     public class Table<T>
     {
-        protected object _SyncRoot = new object();
-        protected Dictionary<string, T> _Data
+        protected object sync_mutex_ = new object();
+        protected Dictionary<string, T> data_
             = new Dictionary<string, T>();
 
         public IEnumerable<string> Keys
         {
             get
             {
-                lock (_SyncRoot) {
-                    foreach (var kvp in _Data)
+                lock (sync_mutex_) {
+                    foreach (var kvp in data_)
                         yield return kvp.Key;
                 }
             }
@@ -27,19 +27,19 @@ namespace EPII
             get
             {
                 T result = default(T);
-                lock (_SyncRoot) {
-                    if (_Data.ContainsKey(key))
-                        result = _Data[key];
+                lock (sync_mutex_) {
+                    if (data_.ContainsKey(key))
+                        result = data_[key];
                 }
                 return result;
             }
             set
             {
-                lock (_SyncRoot) {
-                    if (_Data.ContainsKey(key))
-                        _Data[key] = value;
+                lock (sync_mutex_) {
+                    if (data_.ContainsKey(key))
+                        data_[key] = value;
                     else
-                        _Data.Add(key, value);
+                        data_.Add(key, value);
                 }
             }
         }
@@ -51,32 +51,32 @@ namespace EPII
         public bool Contains(string key)
         {
             bool result = false;
-            lock (_SyncRoot) {
-                result = _Data.ContainsKey(key);
+            lock (sync_mutex_) {
+                result = data_.ContainsKey(key);
             }
             return result;
         }
 
         public void Add(string key, T value)
         {
-            lock (_SyncRoot) {
-                if (!_Data.ContainsKey(key))
-                    _Data.Add(key, value);
+            lock (sync_mutex_) {
+                if (!data_.ContainsKey(key))
+                    data_.Add(key, value);
             }
         }
 
         public void Remove(string key)
         {
-            lock (_SyncRoot) {
-                if (_Data.ContainsKey(key))
-                    _Data.Remove(key);
+            lock (sync_mutex_) {
+                if (data_.ContainsKey(key))
+                    data_.Remove(key);
             }
         }
 
         public void Clear()
         {
-            lock (_SyncRoot) {
-                _Data.Clear();
+            lock (sync_mutex_) {
+                data_.Clear();
             }
         }
     }

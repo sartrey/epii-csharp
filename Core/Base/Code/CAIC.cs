@@ -8,47 +8,47 @@ namespace EPII.Code
     /// </summary>
     public class CAIC
     {
-        private object _SyncRoot = new object();
-        private ulong _Max = 0;
-        private List<ulong> _Nexts = new List<ulong>();
-        private bool _Ordered = false;
+        private object sync_mutex_ = new object();
+        private ulong max_ = 0;
+        private List<ulong> nexts_ = new List<ulong>();
+        private bool ordered_ = false;
 
-        public bool Ordered
+        public bool IsOrdered
         {
-            get { return _Ordered; }
+            get { return ordered_; }
             set
             {
-                lock (_SyncRoot) {
-                    _Ordered = value;
+                lock (sync_mutex_) {
+                    ordered_ = value;
                     if (value)
-                        _Nexts.Sort();
+                        nexts_.Sort();
                 }
             }
         }
 
         public ulong Next()
         {
-            var count = _Nexts.LongCount();
+            var count = nexts_.LongCount();
             var next = 0UL;
             if (count > 0) {
-                next = _Nexts[0];
-                _Nexts.RemoveAt(0);
+                next = nexts_[0];
+                nexts_.RemoveAt(0);
             } else {
-                next = _Max++;
+                next = max_++;
             }
             return next;
         }
 
         public void Revert(ulong code)
         {
-            lock (_SyncRoot) {
-                if (code == _Max - 1) {
-                    _Max = code;
+            lock (sync_mutex_) {
+                if (code == max_ - 1) {
+                    max_ = code;
                 } else {
-                    if (!_Nexts.Contains(code)) {
-                        _Nexts.Add(code);
-                        if (_Ordered)
-                            _Nexts.Sort();
+                    if (!nexts_.Contains(code)) {
+                        nexts_.Add(code);
+                        if (ordered_)
+                            nexts_.Sort();
                     }
                 }
             }

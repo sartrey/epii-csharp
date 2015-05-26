@@ -14,21 +14,21 @@
             }
         }
 
-        private object _SyncRoot = new object();
-        private List<IWindow> _Windows
+        private object sync_mutex_ = new object();
+        private List<IWindow> windows_
             = new List<IWindow>();
-        private int _MaxCache = 16;
+        private int max_cache_ = 16;
 
         public void TryRelease() 
         {
-            if(_Windows.Count > _MaxCache)
-                _Windows.RemoveAll(e => !e.HasView);
+            if(windows_.Count > max_cache_)
+                windows_.RemoveAll(e => !e.HasView);
         }
 
         public T One<T>()
             where T : class, IWindow, new()
         {
-            foreach (var window in _Windows) {
+            foreach (var window in windows_) {
                 if (window.HasView)
                     continue;
                 var target = window as T;
@@ -37,13 +37,13 @@
             }
             TryRelease();
             var new_window = new T();
-            _Windows.Add(new_window);
+            windows_.Add(new_window);
             return new_window;
         }
 
         public IWindow Whose(IView view) 
         {
-            foreach (var window in _Windows) {
+            foreach (var window in windows_) {
                 if (window.View == view)
                     return window;
             }

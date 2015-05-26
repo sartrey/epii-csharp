@@ -5,35 +5,35 @@ namespace EPII.Code
 {
     public sealed class AES : ObjectEx
     {
-        private RijndaelManaged _Core = new RijndaelManaged();
+        private RijndaelManaged core_ = new RijndaelManaged();
 
         public int KeySize
         {
-            get { return _Core.KeySize / 8; }
+            get { return core_.KeySize / 8; }
         }
 
         public int IVSize
         {
-            get { return _Core.BlockSize / 8; }
+            get { return core_.BlockSize / 8; }
         }
 
         public byte[] Key
         {
-            get { return _Core.Key; }
-            set { _Core.Key = value; }
+            get { return core_.Key; }
+            set { core_.Key = value; }
         }
 
         public byte[] IV
         {
-            get { return _Core.IV; }
-            set { _Core.IV = value; }
+            get { return core_.IV; }
+            set { core_.IV = value; }
         }
 
         public byte[] Decipher(byte[] source)
         {
             var ms_src = new MemoryStream(source);
             var cs = new CryptoStream(
-                ms_src, _Core.CreateDecryptor(), CryptoStreamMode.Read);
+                ms_src, core_.CreateDecryptor(), CryptoStreamMode.Read);
             var ms_dst = new MemoryStream();
             cs.CopyTo(ms_dst);
             return ms_dst.ToArray();
@@ -49,7 +49,7 @@ namespace EPII.Code
             var fs_dst = new FileStream(
                 target, FileMode.Create, FileAccess.Write);
             var cs = new CryptoStream(
-                fs_src, _Core.CreateDecryptor(), CryptoStreamMode.Read);
+                fs_src, core_.CreateDecryptor(), CryptoStreamMode.Read);
             cs.CopyTo(fs_dst);
             cs.Close();
             fs_dst.Close();
@@ -62,7 +62,7 @@ namespace EPII.Code
         public void Decipher(Stream source, Stream target)
         {
             var cs = new CryptoStream(
-                source, _Core.CreateDecryptor(), CryptoStreamMode.Read);
+                source, core_.CreateDecryptor(), CryptoStreamMode.Read);
             cs.CopyTo(target);
             cs.Close();
         }
@@ -71,7 +71,7 @@ namespace EPII.Code
         {
             var ms_src = new MemoryStream(source);
             var cs = new CryptoStream(
-                ms_src, _Core.CreateEncryptor(), CryptoStreamMode.Read);
+                ms_src, core_.CreateEncryptor(), CryptoStreamMode.Read);
             var ms_dst = new MemoryStream();
             cs.CopyTo(ms_dst);
             return ms_dst.ToArray();
@@ -87,7 +87,7 @@ namespace EPII.Code
             var fs_dst = new FileStream(
                 target, FileMode.Create, FileAccess.Write);
             var cs = new CryptoStream(
-                fs_src, _Core.CreateEncryptor(), CryptoStreamMode.Read);
+                fs_src, core_.CreateEncryptor(), CryptoStreamMode.Read);
             cs.CopyTo(fs_dst);
             cs.Close();
             fs_dst.Close();
@@ -100,14 +100,14 @@ namespace EPII.Code
         public void Encipher(Stream source, Stream target)
         {
             var cs = new CryptoStream(
-                source, _Core.CreateEncryptor(), CryptoStreamMode.Read);
+                source, core_.CreateEncryptor(), CryptoStreamMode.Read);
             cs.CopyTo(target);
             cs.Close();
         }
 
         protected override void DisposeManaged()
         {
-            _Core.Dispose();
+            core_.Dispose();
         }
 
         protected override void DisposeNative()

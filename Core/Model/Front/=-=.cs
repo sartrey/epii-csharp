@@ -4,30 +4,30 @@
 
     public partial class Startup : ISingletonModel
     {
-        private Director _Director = null;
-        private ViewPool _ViewPool = null;
-        private WindowPool _WindowPool = null;
+        private Director director_ = null;
+        private ViewPool view_pool_ = null;
+        private WindowPool window_pool_ = null;
 
         public Director Director 
         {
-            get { return _Director; }
+            get { return director_; }
         }
 
         public ViewPool ViewPool 
         {
-            get { return _ViewPool; }
+            get { return view_pool_; }
         }
 
         public WindowPool WindowPool 
         {
-            get { return _WindowPool; }
+            get { return window_pool_; }
         }
 
         public Startup()
         {
-            _Director = new Director();
-            _ViewPool = new ViewPool();
-            _WindowPool = new WindowPool();
+            director_ = new Director();
+            view_pool_ = new ViewPool();
+            window_pool_ = new WindowPool();
         }
     }
 }

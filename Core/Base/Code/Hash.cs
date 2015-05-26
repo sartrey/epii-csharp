@@ -9,19 +9,19 @@ namespace EPII.Code
     /// </summary>
     public class Hash
     {
-        private Stream _Stream = null;
-        private Encoding _Encoding = Encoding.UTF8;
+        private Stream stream_ = null;
+        private Encoding encoding_ = Encoding.UTF8;
 
         public Stream Stream
         {
-            get { return _Stream; }
-            set { _Stream = value; }
+            get { return stream_; }
+            set { stream_ = value; }
         }
 
         public Encoding Encoding
         {
-            get { return _Encoding; }
-            set { _Encoding = value; }
+            get { return encoding_; }
+            set { encoding_ = value; }
         }
 
         public Hash()
@@ -35,13 +35,13 @@ namespace EPII.Code
 
         public Hash(Stream stream)
         {
-            _Stream = stream;
+            stream_ = stream;
         }
 
         private string ComputeHash(HashAlgorithm hasher)
         {
             byte[] codes = null;
-            codes = hasher.ComputeHash(_Stream);
+            codes = hasher.ComputeHash(stream_);
             var sbd = new StringBuilder();
             foreach (byte b in codes)
                 sbd.Append(b.ToString("x2"));
@@ -50,10 +50,10 @@ namespace EPII.Code
 
         public void SetText(string text) 
         {
-            if(_Stream != null)
-                _Stream.Close();
-            _Stream = new MemoryStream(
-                _Encoding.GetBytes(text));
+            if(stream_ != null)
+                stream_.Close();
+            stream_ = new MemoryStream(
+                encoding_.GetBytes(text));
         }
 
         public string GetMD5()

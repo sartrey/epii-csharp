@@ -9,9 +9,9 @@ namespace EPII.Code
     {
         public const int MaxLength = 9;
 
-        private object _SyncRoot = new object();
-        private STC _STC = new STC();
-        private int _Spin = 0;
+        private object sync_mutex_ = new object();
+        private STC stc_ = new STC();
+        private int spin_ = 0;
 
         public LUC()
         {
@@ -20,16 +20,16 @@ namespace EPII.Code
         public string Next()
         {
             DateTime time;
-            lock (_SyncRoot) {
+            lock (sync_mutex_) {
                 time = DateTime.Now;
-                _Spin = (_Spin == 238327 ? 0 : _Spin + 1);
+                spin_ = (spin_ == 238327 ? 0 : spin_ + 1);
             }
-            return Combine(time, _Spin);
+            return Combine(time, spin_);
         }
 
         private string Combine(DateTime time, int spin)
         {
-            var time_text = _STC.ToText(time);
+            var time_text = stc_.ToText(time);
             var spin_text = spin.ToString();
             string result =
                 RCC.DecToSafe62(time_text).PadLeft(6, '0') +

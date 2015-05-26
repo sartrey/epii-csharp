@@ -5,46 +5,46 @@ namespace EPII
 {
     public class Loop
     {
-        private object _SyncRoot = new object();
-        private Action _Action = null;
-        private Thread _Thread = null;
-        private bool _IsRunning = false;
-        private int _MaxTimes = 0;
-        private int _Times = 0;
+        private object sync_mutex_ = new object();
+        private Action action_ = null;
+        private Thread thread_ = null;
+        private bool running_ = false;
+        private int max_times_ = 0;
+        private int times_ = 0;
 
         public int MaxTimes
         {
-            get { return _MaxTimes; }
+            get { return max_times_; }
             set
             {
-                lock (_SyncRoot) {
-                    _MaxTimes = value;
+                lock (sync_mutex_) {
+                    max_times_ = value;
                 }
             }
         }
 
         public int Times
         {
-            get { return _Times; }
+            get { return times_; }
         }
 
         public Loop(Action action)
         {
             if (action == null)
                 throw new ArgumentNullException();
-            _Action = action;
+            action_ = action;
         }
 
         private void Routine()
         {
             while (true) {
-                lock (_SyncRoot) {
-                    if (!_IsRunning)
+                lock (sync_mutex_) {
+                    if (!running_)
                         break;
                 }
-                _Action();
-                lock (_SyncRoot) {
-                    if (_MaxTimes > 0 && ++_Times == _MaxTimes)
+                action_();
+                lock (sync_mutex_) {
+                    if (max_times_ > 0 && ++times_ == max_times_)
                         break;
                 }
             }
@@ -52,24 +52,24 @@ namespace EPII
 
         public void Start()
         {
-            lock (_SyncRoot) {
-                if (_Thread == null)
-                    _Thread = new Thread(
+            lock (sync_mutex_) {
+                if (thread_ == null)
+                    thread_ = new Thread(
                         new ThreadStart(Routine));
-                _Thread.Start();
-                _IsRunning = true;
+                thread_.Start();
+                running_ = true;
             }
         }
 
         public void Stop(int timeout = 10000)
         {
-            lock (_SyncRoot) {
-                if (_Thread == null)
+            lock (sync_mutex_) {
+                if (thread_ == null)
                     return;
-                _IsRunning = false;
-                _Thread.Join(timeout);
-                if (_Thread.ThreadState != ThreadState.Stopped)
-                    _Thread.Abort();
+                running_ = false;
+                thread_.Join(timeout);
+                if (thread_.ThreadState != ThreadState.Stopped)
+                    thread_.Abort();
             }
         }
     }

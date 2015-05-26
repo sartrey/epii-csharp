@@ -5,8 +5,8 @@ namespace EPII.Area
 {
     public abstract class Area
     {
-        private Service[] _Services = null;
-        private Table<object> _Shares = null;
+        private Service[] services_ = null;
+        private Table<object> shares_ = null;
 
         public abstract Guid Id { get; }
 
@@ -28,13 +28,13 @@ namespace EPII.Area
                     services.Add((Service)
                         Activator.CreateInstance(type, this));
             }
-            _Services = services.ToArray();
+            services_ = services.ToArray();
         }
 
         private void CreateShares()
         {
-            _Shares = new Table<object>();
-            UseShares(_Shares);
+            shares_ = new Table<object>();
+            UseShares(shares_);
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace EPII.Area
 
         public Service GetService(string name)
         {
-            foreach (var service in _Services) {
+            foreach (var service in services_) {
                 var type = service.GetType();
                 var fullname = name + "Service";
                 if (type.Name == fullname)
@@ -55,7 +55,7 @@ namespace EPII.Area
 
         public Service GetService<T>()
         {
-            foreach (var service in _Services) {
+            foreach (var service in services_) {
                 if (typeof(T).IsInstanceOfType(service))
                     return service;
             }
@@ -64,7 +64,7 @@ namespace EPII.Area
 
         public object GetShare(string key)
         {
-            return _Shares[key];
+            return shares_[key];
         }
 
         public abstract DataAccess[] CreateDataAccesses();

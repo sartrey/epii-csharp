@@ -5,8 +5,8 @@
 
     public class Runtime : ObjectEx
     {
-        private static object _CtorMutex = null;
-        private static Runtime _Instance = null;
+        private static object ctor_mutex = null;
+        private static Runtime instance_ = null;
 
         /// <summary>
         /// get runtime single instance
@@ -15,31 +15,24 @@
         {
             get
             {
-                if (_Instance == null)
-                    _Instance = new Runtime();
-                return _Instance;
+                if (instance_ == null)
+                    instance_ = new Runtime();
+                return instance_;
             }
         }
 
         public static void Register<T>(bool locked = false)
             where T : Runtime, new()
         {
-            if(_CtorMutex == null)
-                _Instance = new T();
+            if(ctor_mutex == null)
+                instance_ = new T();
             if (locked)
-                _CtorMutex = new object();
+                ctor_mutex = new object();
         }
 
-        private object _SyncRoot = new object();
-        private List<ISingletonModel> _SingletonModels
+        private object model_mutex_ = new object();
+        private List<ISingletonModel> singleton_models_
             = new List<ISingletonModel>();
-        private Table<object> _Data
-            = new Table<object>();
-
-        public Table<object> Data
-        {
-            get { return _Data; }
-        }
 
         public Runtime()
         {
@@ -55,11 +48,11 @@
                 var t = (T)Activator.CreateInstance(typeof(T));
                 return t;
             } else {
-                lock (_SyncRoot) {
-                    var t = _SingletonModels.Find(e => e.GetType() == typeof(T));
+                lock (model_mutex_) {
+                    var t = singleton_models_.Find(e => e.GetType() == typeof(T));
                     if(t == null)
                         t = (ISingletonModel)(new T());
-                    _SingletonModels.Add(t);
+                    singleton_models_.Add(t);
                     return (T)t;
                 }
             }
@@ -80,18 +73,12 @@
 
         protected override void DisposeManaged()
         {
-            foreach (var key in _Data.Keys) {
-                var item = _Data[key] as IDisposable;
-                if (item != null)
-                    item.Dispose();
-            }
-            _Data.Clear();
-            foreach (var model in _SingletonModels) {
+            foreach (var model in singleton_models_) {
                 var item = model as IDisposable;
                 if (item != null)
                     item.Dispose();
             }
-            _SingletonModels.Clear();
+            singleton_models_.Clear();
         }
 
         protected override void DisposeNative()

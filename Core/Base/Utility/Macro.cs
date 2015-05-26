@@ -15,7 +15,7 @@ namespace EPII
             var parts = path.Split(
                 new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
             foreach (var x in xml.Elements(parts[0])) {
-                _Data.Add(x.Attribute(parts[1]).Value, x.Value);
+                data_.Add(x.Attribute(parts[1]).Value, x.Value);
             }
         }
 
@@ -29,7 +29,7 @@ namespace EPII
             var result = text;
             while (HasMacro(result)) {
                 bool dead = true;
-                foreach (var kvp in _Data) {
+                foreach (var kvp in data_) {
                     var replace = "?(" + kvp.Key + ")";
                     if (result.Contains(replace))
                         dead = false;

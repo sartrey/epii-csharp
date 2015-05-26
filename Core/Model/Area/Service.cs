@@ -6,7 +6,7 @@ namespace EPII.Area
 
     public abstract class Service
     {
-        private static Table<XHandler> _XHandlers
+        private static Table<XHandler> x_handlers_
             = new Table<XHandler>();
 
         private Area _Area = null;
@@ -18,7 +18,7 @@ namespace EPII.Area
 
         public dynamic X(string request, dynamic data)
         {
-            var handler = _XHandlers[request];
+            var handler = x_handlers_[request];
             if (handler != null)
                 return handler(data);
             var method = GetType().GetMethod(request);
@@ -26,7 +26,7 @@ namespace EPII.Area
                 try {
                     handler = (XHandler)Delegate.CreateDelegate(
                         typeof(XHandler), method);
-                    _XHandlers.Add(request, handler);
+                    x_handlers_.Add(request, handler);
                     return handler(data);
                 } catch {
                     throw new NotImplementedException();
