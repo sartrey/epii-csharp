@@ -40,7 +40,7 @@
   <ItemGroup>
     <Compile Include="Base\Code\CAIC.cs" />
     <Compile Include="Base\Extend\EventEx.cs" />
-    <Compile Include="Base\Collection\LinqEx.cs" />
+    <Compile Include="Base\Extend\LinqEx.cs" />
     <Compile Include="Base\Front\IStyle.cs" />
     <Compile Include="Base\Front\IStyleTarget.cs" />
     <Compile Include="Base\Utility\Cache.cs" />

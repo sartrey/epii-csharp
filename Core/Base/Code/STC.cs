@@ -31,15 +31,15 @@ namespace EPII.Code
             return time_text;
         }
 
-        public DateTime FromText(string text, int year)
+        public DateTime FromText(string text, int era)
         {
-            var time = new DateTime();
             var year_text =
-                year.ToString("d4").Substring(0, 4 - year_) +
+                era.ToString("d4").Substring(0, 4 - year_) +
                 text.Substring(0, year_);
             var day_text = text.Substring(year_, 3);
             var sec_text = text.Substring(year_ + 3, 5);
-            time.AddYears(year);
+            var time = new DateTime();
+            time.AddYears(int.Parse(year_text));
             time.AddDays(int.Parse(day_text));
             time.AddSeconds(int.Parse(sec_text));
             return time;
