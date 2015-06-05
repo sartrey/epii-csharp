@@ -7,7 +7,10 @@ namespace EPII.Code
     /// </summary>
     public class LUC
     {
+        public const int MinLength = 7;
         public const int MaxLength = 9;
+        public const string MinValue = "06m0a80";
+        public const string MaxValue = "AqSu2Zzzz";
 
         private object sync_mutex_ = new object();
         private STC stc_ = new STC();

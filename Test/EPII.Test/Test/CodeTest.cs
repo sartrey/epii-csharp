@@ -13,7 +13,7 @@ namespace EPII.Test
 
         public override void Prepare()
         {
-            AddAction(TestCAIC);
+            //AddAction(TestCAIC);
             //AddAction(MakeLUC);
             //AddAction(RepeatLUC);
         }

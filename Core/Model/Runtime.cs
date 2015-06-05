@@ -43,13 +43,13 @@
         {
             var type = typeof(T);
             var is_transient = type.GetInterface("ITransientModel") != null;
-            //var is_singleton = type.GetInterface("ISingletonModel") != null;
             if (is_transient) {
                 var t = (T)Activator.CreateInstance(typeof(T));
                 return t;
             } else {
                 lock (model_mutex_) {
-                    var t = singleton_models_.Find(e => e.GetType() == typeof(T));
+                    var t = singleton_models_.Find(
+                        e => e.GetType() == typeof(T));
                     if(t == null)
                         t = (ISingletonModel)(new T());
                     singleton_models_.Add(t);
