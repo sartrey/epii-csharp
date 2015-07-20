@@ -61,6 +61,15 @@ namespace EPII
             }
         }
 
+        public void TryStop() 
+        {
+            lock (sync_mutex_) {
+                if (thread_ == null)
+                    return;
+                running_ = false;
+            }
+        }
+
         public void Stop(int timeout = 10000)
         {
             lock (sync_mutex_) {

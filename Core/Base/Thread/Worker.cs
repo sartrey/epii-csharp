@@ -43,6 +43,11 @@
             loop_.Start();
         }
 
+        public void TryStop() 
+        {
+            loop_.TryStop();
+        }
+
         public void Stop(int timeout = 10000)
         {
             loop_.Stop(timeout);
